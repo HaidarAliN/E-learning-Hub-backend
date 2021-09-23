@@ -19,6 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -61,18 +63,20 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>All Classes</span>
+                    <span>Course Content</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Preview:</h6>
-                        <a class="collapse-item" href="OnGoingClasses.html">On going Courses</a>
-                        <a class="collapse-item" href="FinishedClasses.html">Fineshed Courses</a>
+                        <a class="collapse-item" href="CourseContent.html">Course Dashboard</a>
+                        <a class="collapse-item" href="UploadMaterials.html">Upload Materials</a>
+                        <a class="collapse-item" href="MakeQuiz.html">Make quiz</a>
+                        <a class="collapse-item" href="ManageStudents.html">Manage Students</a>
+                        <a class="collapse-item" href="CourseAgenda.html">Course Agenda</a>
+                        <a class="collapse-item" href="EditCourseInfo.html">Edit Course Info</a>
                     </div>
                 </div>
             </li>
-
-
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -295,9 +299,9 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Haidar Ali</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Welcome Haidar Ali</h1>
 
-                    <p class="mb-4">Here you can Create a new class:</p>
+                    <p class="mb-4">Here you can edit the course info</p>
 
                     <div class="row">
 
@@ -330,6 +334,24 @@
                                             </div>
                                             <div class="col-xl-4 col-lg-7">
                                                 <input class="form-control" type="text" placeholder="Description">
+                                            </div>
+                                            <div class="col-xl-5 col-lg-7">
+                                            </div>
+                                        </div>
+                                        <!-- end row  -->
+                                        <br>
+                                         <!-- strat row  -->
+                                         <div class="row">
+                                            <div class="col-xl-3 col-lg-7">
+                                                Course progress:
+                                            </div>
+                                            <div class="col-xl-4 col-lg-7">
+                                                <form>
+                                                    <div class="form-group">
+                                                      <label for="formControlRange bg-gradient-primary">Example Range input</label>
+                                                      <input type="range" class="form-control-range bg-gray-500" id="formControlRange">
+                                                    </div>
+                                                  </form>
                                             </div>
                                             <div class="col-xl-5 col-lg-7">
                                             </div>
@@ -397,7 +419,7 @@
                                                     <span class="icon text-gray-600">
                                                         <i class="fas fa-arrow-right"></i>
                                                     </span>
-                                                    <span class="text">Create Course</span>
+                                                    <span class="text">Update Course info</span>
                                                 </a>
                                             </div>
                                             <div class="col-xl-4 col-lg-7">
@@ -418,57 +440,66 @@
 
 
                     </div>
-                    <!-- /.container-fluid -->
+
 
                 </div>
-                <!-- End of Main Content -->
-
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-
-                </footer>
-                <!-- End of Footer -->
+                <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+
+            </footer>
+            <!-- End of Footer -->
 
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
+    </div>
+    <!-- End of Page Wrapper -->
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    
+        <!-- Page level custom scripts -->
+        <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 
