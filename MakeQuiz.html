@@ -293,117 +293,49 @@
                                                 Quiz name:
                                             </div>
                                             <div class="col-xl-4 col-lg-7">
-                                                <input class="form-control" type="text" placeholder="Quiz Name">
+                                                <input class="form-control" type="text" placeholder="Name (must be more than 3 characters)" id="quizname">
                                             </div>
-                                            <div class="col-xl-5 col-lg-7">
-                                                <a href="#" class="btn btn-light btn-icon-split">
+                                            <div class="col-xl-5 col-lg-7" id="createbtn">
+                                                <a  class="btn btn-light btn-icon-split">
                                                     <span class="icon text-gray-600">
                                                         <i class="fas fa-arrow-right"></i>
                                                     </span>
-                                                    <span class="text">Create</span>
+                                                    <span class="text" id="create_quiz_btn">Create</span>
                                                 </a>
                                             </div>
                                         </div>
 
                                         <!-- end row  -->
                                         <br>
-                                        <h2>Add Questions:</h2>
-                                        <br>
-                                        <!-- strat row  -->
-                                        <!-- end row  -->
-                                        <br>
-                                        <!-- strat row  -->
-                                        <div class="row">
-                                            <div class="col-xl-3 col-lg-7">
-                                                Question type:
-                                            </div>
-                                            <div class="col-xl-4 col-lg-7">
-                                                <div class="dropdown no-arrow mb-4">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                        id="dropdownMenuButton" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
-                                                        Choose type
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#">MCQ</a>
-                                                        <a class="dropdown-item" href="#">T or F</a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-xl-5 col-lg-7">
-                                            </div>
-                                        </div>
-                                        <!--  -->
-                                        <div class="row">
-                                            <div class="col-xl-3 col-lg-7">
-                                                Question Content:
-                                            </div>
-                                            <div class="col-xl-4 col-lg-7">
-                                                <input class="form-control" type="text" placeholder="question">
-                                            </div>
-                                            <div class="col-xl-5 col-lg-7">
-                                            </div>
-                                        </div>
-                                        <!-- end row  -->
-                                        <br>
-                                        <!-- strat row  -->
-                                        <div id="mcq" class="invisiblee">
-                                            <!--  -->
-                                            <div class="row">
-                                                <div class="col-xl-3 col-lg-7">
-                                                    First Answer:
-                                                </div>
-                                                <div class="col-xl-4 col-lg-7">
-                                                    <input class="form-control" type="text" placeholder="anser">
-                                                </div>
-                                                <div class="col-xl-5 col-lg-7">
-                                                </div>
-                                            </div>
-                                            <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- add question card -->
+                            <div class="card shadow mb-4" id="addquestiondiv">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-dark">Add Questions</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <div >
+                                            <!-- strat row  -->
                                             <!-- end row  -->
-                                            <!--  -->
-                                            <div class="row">
-                                                <div class="col-xl-3 col-lg-7">
-                                                    Second Answer:
-                                                </div>
-                                                <div class="col-xl-4 col-lg-7">
-                                                    <input class="form-control" type="text" placeholder="anser">
-                                                </div>
-                                                <div class="col-xl-5 col-lg-7">
-                                                </div>
-                                            </div>
                                             <br>
-                                            <!-- end row  -->
-                                            <!--  -->
-                                            <div class="row">
-                                                <div class="col-xl-3 col-lg-7">
-                                                    Third Answer:
-                                                </div>
-                                                <div class="col-xl-4 col-lg-7">
-                                                    <input class="form-control" type="text" placeholder="anser">
-                                                </div>
-                                                <div class="col-xl-5 col-lg-7">
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <!-- end row  -->
                                             <!-- strat row  -->
                                             <div class="row">
                                                 <div class="col-xl-3 col-lg-7">
-                                                    Right Answer:
+                                                    Question type:
                                                 </div>
                                                 <div class="col-xl-4 col-lg-7">
                                                     <div class="dropdown no-arrow mb-4">
                                                         <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                            id="dropdownMenuButton" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">
-                                                            Choose major
+                                                            id="typebtn" data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            Choose type
                                                         </button>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#">First</a>
-                                                            <a class="dropdown-item" href="#">Second</a>
-                                                            <a class="dropdown-item" href="#">Third</a>
+                                                            <a class="dropdown-item atype">MCQ</a>
+                                                            <a class="dropdown-item atype">T or F</a>
                                                         </div>
                                                     </div>
 
@@ -411,24 +343,128 @@
                                                 <div class="col-xl-5 col-lg-7">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- end row  -->
-                                        <!-- strat row  -->
-                                        <div class="row">
-                                            <div class="col-xl-3 col-lg-7">
-                                                <a href="#" class="btn btn-light btn-icon-split">
-                                                    <span class="icon text-gray-600">
-                                                        <i class="fas fa-arrow-right"></i>
-                                                    </span>
-                                                    <span class="text">Add question</span>
-                                                </a>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-7">
-                                                <div class="dropdown no-arrow mb-4">
-
+                                            <!--  -->
+                                            <div class="row">
+                                                <div class="col-xl-3 col-lg-7">
+                                                    Question Content:
+                                                </div>
+                                                <div class="col-xl-4 col-lg-7">
+                                                    <input class="form-control" type="text" placeholder="question">
+                                                </div>
+                                                <div class="col-xl-5 col-lg-7">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-5 col-lg-7">
+                                            <!-- end row  -->
+                                            <br>
+                                            <hr><br>
+                                            <!-- strat row  -->
+                                            <div id="mcq" class="invisiblee">
+                                                <!--  -->
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-lg-7">
+                                                        First Answer:
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-7">
+                                                        <input class="form-control" type="text" placeholder="anser">
+                                                    </div>
+                                                    <div class="col-xl-5 col-lg-7">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <!-- end row  -->
+                                                <!--  -->
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-lg-7">
+                                                        Second Answer:
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-7">
+                                                        <input class="form-control" type="text" placeholder="anser">
+                                                    </div>
+                                                    <div class="col-xl-5 col-lg-7">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <!-- end row  -->
+                                                <!--  -->
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-lg-7">
+                                                        Third Answer:
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-7">
+                                                        <input class="form-control" type="text" placeholder="anser">
+                                                    </div>
+                                                    <div class="col-xl-5 col-lg-7">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <!-- end row  -->
+                                                <!-- strat row  -->
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-lg-7">
+                                                        Right Answer:
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-7">
+                                                        <div class="dropdown no-arrow mb-4">
+                                                            <button class="btn btn-secondary dropdown-toggle"
+                                                                type="button" id="mcqansb" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                                Choose Ans
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item mcqans">First</a>
+                                                                <a class="dropdown-item mcqans">Second</a>
+                                                                <a class="dropdown-item mcqans">Third</a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-xl-5 col-lg-7">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div><br>
+                                            <!-- end row  -->
+                                            <div id="tor" class="invisiblee">
+                                                <div class="row">
+                                                    <div class="col-xl-3 col-lg-7">
+                                                        Right Answer:
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-7">
+                                                        <div class="dropdown no-arrow mb-4">
+                                                            <button class="btn btn-secondary dropdown-toggle"
+                                                                type="button" id="tofbtn" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                                Choose Ans
+                                                            </button>
+                                                            <div class="dropdown-menu"">
+                                                            <a class=" dropdown-item tofans">True</a>
+                                                                <a class="dropdown-item tofans">Fasle</a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-xl-5 col-lg-7">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <!-- strat row  -->
+                                            <div class="row">
+                                                <div class="col-xl-3 col-lg-7">
+                                                    <a  class="btn btn-light btn-icon-split">
+                                                        <span class="icon text-gray-600">
+                                                            <i class="fas fa-arrow-right"></i>
+                                                        </span>
+                                                        <span class="text">Add question</span>
+                                                    </a>
+                                                </div>
+                                                <div class="col-xl-4 col-lg-7">
+                                                    <div class="dropdown no-arrow mb-4">
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-5 col-lg-7">
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- end row  -->
@@ -437,6 +473,57 @@
                                 </div>
                             </div>
                             <!-- /.container-fluid -->
+
+
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Quiz 1 Question:</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Question</th>
+                                                    <th>First answer</th>
+                                                    <th>Second answer</th>
+                                                    <th>Third answer</th>
+                                                    <th>Right answer</th>
+                                                    <th>Edit</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>What is bitcoin?</td>
+                                                    <td>fast food</td>
+                                                    <td>batata</td>
+                                                    <td>vitual coin</td>
+                                                    <td>third ans</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-warning btn-icon-split">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </span>
+                                                            <span class="text">Edit</span>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-danger btn-icon-split">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fas fa-trash"></i>
+                                                            </span>
+                                                            <span class="text">Remove</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- End of Main Content -->
                         <!-- Footer -->
@@ -485,6 +572,7 @@
 
                 <!-- Page level custom scripts -->
                 <script src="js/demo/datatables-demo.js"></script>
+                <script src="vendor/jquery/makequiz.js"></script>
 
 </body>
 

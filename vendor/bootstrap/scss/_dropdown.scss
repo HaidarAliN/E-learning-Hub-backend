@@ -124,7 +124,7 @@
   display: block;
   width: 100%; // For `<button>`s
   padding: $dropdown-item-padding-y $dropdown-item-padding-x;
-  clear: both;
+  // clear: both;
   font-weight: $font-weight-normal;
   color: $dropdown-link-color;
   text-align: inherit; // For `<button>`s
