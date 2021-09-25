@@ -293,10 +293,11 @@
                                                 Quiz name:
                                             </div>
                                             <div class="col-xl-4 col-lg-7">
-                                                <input class="form-control" type="text" placeholder="Name (must be more than 3 characters)" id="quizname">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Name (must be more than 3 characters)" id="quizname">
                                             </div>
                                             <div class="col-xl-5 col-lg-7" id="createbtn">
-                                                <a  class="btn btn-light btn-icon-split">
+                                                <a class="btn btn-light btn-icon-split">
                                                     <span class="icon text-gray-600">
                                                         <i class="fas fa-arrow-right"></i>
                                                     </span>
@@ -317,9 +318,22 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="mb-2">
-                                        <div >
+                                        <div>
                                             <!-- strat row  -->
                                             <!-- end row  -->
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-xl-3 col-lg-7">
+                                                    Question Content:
+                                                </div>
+                                                <div class="col-xl-4 col-lg-7">
+                                                    <input class="form-control" type="text"
+                                                        placeholder="question (5 characters minimum)"
+                                                        id="questioncontent">
+                                                </div>
+                                                <div class="col-xl-5 col-lg-7">
+                                                </div>
+                                            </div>
                                             <br>
                                             <!-- strat row  -->
                                             <div class="row">
@@ -344,16 +358,7 @@
                                                 </div>
                                             </div>
                                             <!--  -->
-                                            <div class="row">
-                                                <div class="col-xl-3 col-lg-7">
-                                                    Question Content:
-                                                </div>
-                                                <div class="col-xl-4 col-lg-7">
-                                                    <input class="form-control" type="text" placeholder="question (5 characters minimum)" id="questioncontent">
-                                                </div>
-                                                <div class="col-xl-5 col-lg-7">
-                                                </div>
-                                            </div>
+
                                             <!-- end row  -->
                                             <br>
                                             <hr><br>
@@ -365,7 +370,8 @@
                                                         First Answer:
                                                     </div>
                                                     <div class="col-xl-4 col-lg-7">
-                                                        <input class="form-control" type="text" placeholder="answer" id="ans1">
+                                                        <input class="form-control" type="text" placeholder="answer"
+                                                            id="ans1">
                                                     </div>
                                                     <div class="col-xl-5 col-lg-7">
                                                     </div>
@@ -378,7 +384,8 @@
                                                         Second Answer:
                                                     </div>
                                                     <div class="col-xl-4 col-lg-7">
-                                                        <input class="form-control" type="text" placeholder="answer" id="ans2">
+                                                        <input class="form-control" type="text" placeholder="answer"
+                                                            id="ans2">
                                                     </div>
                                                     <div class="col-xl-5 col-lg-7">
                                                     </div>
@@ -391,7 +398,8 @@
                                                         Third Answer:
                                                     </div>
                                                     <div class="col-xl-4 col-lg-7">
-                                                        <input class="form-control" type="text" placeholder="answer" id="ans3">
+                                                        <input class="form-control" type="text" placeholder="answer"
+                                                            id="ans3">
                                                     </div>
                                                     <div class="col-xl-5 col-lg-7">
                                                     </div>
@@ -438,7 +446,7 @@
                                                             </button>
                                                             <div class="dropdown-menu"">
                                                             <a class=" dropdown-item tofans">True</a>
-                                                                <a class="dropdown-item tofans">Fasle</a>
+                                                                <a class="dropdown-item tofans">False</a>
                                                             </div>
                                                         </div>
 
@@ -451,7 +459,7 @@
                                             <!-- strat row  -->
                                             <div class="row">
                                                 <div class="col-xl-3 col-lg-7">
-                                                    <a  class="btn btn-light btn-icon-split">
+                                                    <a class="btn btn-light btn-icon-split">
                                                         <span class="icon text-gray-600">
                                                             <i class="fas fa-arrow-right"></i>
                                                         </span>
@@ -481,7 +489,8 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="questionsTable" width="100%"
+                                            cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>Question</th>
@@ -494,35 +503,108 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>What is bitcoin?</td>
-                                                    <td>fast food</td>
-                                                    <td>batata</td>
-                                                    <td>vitual coin</td>
-                                                    <td>third ans</td>
-                                                    <td>
-                                                        <a href="#" class="btn btn-warning btn-icon-split">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-info-circle"></i>
-                                                            </span>
-                                                            <span class="text">Edit</span>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="btn btn-danger btn-icon-split">
-                                                            <span class="icon text-white-50">
-                                                                <i class="fas fa-trash"></i>
-                                                            </span>
-                                                            <span class="text">Remove</span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                
+                                                <!-- body -->
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                            <!-- edit mcq -->
+                            <div class="card shadow mb-4" id="editmcqdiv">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-dark">Edit question:</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <!-- strat row  -->
+                                        <div class="row">
+                                            <div class="col-xl-2 col-lg-7">
+                                                <input class="form-control" type="text" placeholder="question"
+                                                    id="mcqquestionupdate">
+                                            </div>
+                                            <div class="col-xl-2 col-lg-7">
+                                                <input class="form-control" type="text" placeholder="answer 1"
+                                                    id="firstmcqansup">
+                                            </div>
+                                            <div class="col-xl-2 col-lg-7">
+                                                <input class="form-control" type="text" placeholder="answer 2"
+                                                    id="secondmcqansup">
+                                            </div>
+                                            <div class="col-xl-2 col-lg-7">
+                                                <input class="form-control" type="text" placeholder="answer 3"
+                                                    id="thirdmcqansup">
+                                            </div>
+                                            <div class="col-xl-2 col-lg-7">
+                                                <div class="dropdown no-arrow mb-4">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                        id="upmcqansb" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        Choose Ans
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item upmcqans">First</a>
+                                                        <a class="dropdown-item upmcqans">Second</a>
+                                                        <a class="dropdown-item upmcqans">Third</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-7" id="upmcqbtn">
+                                                <a class="btn btn-light btn-icon-split">
+                                                    <span class="icon text-gray-600">
+                                                        <i class="fas fa-arrow-right"></i>
+                                                    </span>
+                                                    <span class="text" id="up_mcq_btn">update</span>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- end row  -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end edit mcq  -->
+
+                            <!-- edit tor -->
+                            <div class="card shadow mb-4" id="edittofdiv">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-dark">Edit question:</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <!-- strat row  -->
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-7">
+                                                <input class="form-control" type="text" placeholder="question"
+                                                    id="tofquestionupdate">
+                                            </div>
+                                            <div class="col-xl-2 col-lg-7">
+                                                <div class="dropdown no-arrow mb-4">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                        id="uptofansb" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        Choose Ans
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item uptofans">True</a>
+                                                        <a class="dropdown-item uptofans">False</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-7" id="uptofbtn">
+                                                <a class="btn btn-light btn-icon-split">
+                                                    <span class="icon text-gray-600">
+                                                        <i class="fas fa-arrow-right"></i>
+                                                    </span>
+                                                    <span class="text" id="up_mcq_btn">update</span>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- end row  -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end edit tor -->
 
                         </div>
                         <!-- End of Main Content -->
