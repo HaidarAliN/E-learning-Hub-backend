@@ -62,7 +62,6 @@
                         <h6 class="collapse-header">Preview:</h6>
                         <a class="collapse-item" href="CourseContent.html">Course Dashboard</a>
                         <a class="collapse-item" href="UploadMaterials.html">Upload Materials</a>
-                        <a class="collapse-item" href="MakeQuiz.html">Create Quiz</a>
                         <a class="collapse-item" href="ManageQuiz.html">Manage Quizzes</a>
                         <a class="collapse-item" href="ManageStudents.html">Manage Students</a>
                         <a class="collapse-item" href="CourseAgenda.html">Course Agenda</a>
@@ -297,13 +296,27 @@
                                                 <input class="form-control" type="text"
                                                     placeholder="Name (must be more than 3 characters)" id="quizname">
                                             </div>
-                                            <div class="col-xl-5 col-lg-7" id="createbtn">
+                                            <div class="col-xl-2 col-lg-7" id="createbtn">
                                                 <a class="btn btn-light btn-icon-split">
                                                     <span class="icon text-gray-600">
                                                         <i class="fas fa-arrow-right"></i>
                                                     </span>
                                                     <span class="text" id="create_quiz_btn">Create</span>
                                                 </a>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-7">
+                                                <div class="dropdown no-arrow mb-4">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                        id="loadquiz" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        Or choose quiz
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item loadquiz">quiz 1</a>
+                                                        <a class="dropdown-item loadquiz">quiz 2</a>
+                                                        <a class="dropdown-item laodquiz">quiz 3</a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -460,11 +473,11 @@
                                             <!-- strat row  -->
                                             <div class="row">
                                                 <div class="col-xl-3 col-lg-7">
-                                                    <a class="btn btn-light btn-icon-split">
+                                                    <a class="btn btn-light btn-icon-split" id="addqbtn">
                                                         <span class="icon text-gray-600">
                                                             <i class="fas fa-arrow-right"></i>
                                                         </span>
-                                                        <span class="text" id="addqbtn">Add question</span>
+                                                        <span class="text" >Add question</span>
                                                     </a>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-7">
