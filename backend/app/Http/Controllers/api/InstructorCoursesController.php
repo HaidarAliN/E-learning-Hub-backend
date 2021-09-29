@@ -12,6 +12,7 @@ use App\Models\Course;
 use App\Models\Material;
 use App\Models\Participant;
 use App\Models\Quiz;
+use App\Models\Question;
 
 class InstructorCoursesController extends Controller
 {
@@ -119,13 +120,23 @@ class InstructorCoursesController extends Controller
         }
     }
 
-    public function addQuestions($id){
+    public function addQuestions(Request $request, $id){
 
         $inst_id = auth()->user()->id;
         $course_exist = $this->is_exist($inst_id, $id);
         if($course_exist){
             
-            
+            $question = new Question;
+            $question->content = $request->content;
+            $question->first_answer = $request->first_answer;
+            $question->second_answer = $request->second_answer;
+            $question->third_answer = $request->third_answer;
+            $question->right_answer = $request->right_answer;
+            $question->type = $request->type;
+            $question->quiz_id = $request->quiz_id;
+            $question->save();
+            $response['status'] = "added";
+            return response()->json($response);
 
         }else{
             $response['status'] = "unauth";
