@@ -157,6 +157,28 @@ class DatabaseSeeder extends Seeder
 		]);
 
 		DB::table("courses")->insert([
+			"name" => "fr finished",
+			"description" => "Interesting course",
+			 "type_id" =>"3",
+			 "major_id" =>"3",
+			 "progress" => 100,
+        	"instructor_id" => 2,
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("courses")->insert([
+			"name" => "EN finished",
+			"description" => "Impotent course",
+			 "type_id" =>"3",
+			 "major_id" =>"3",
+			 "progress" => 100,
+        	"instructor_id" => 2,
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("courses")->insert([
 			"name" => "data structure",
 			"description" => "verry good",
 			 "type_id" =>"1",
@@ -173,6 +195,28 @@ class DatabaseSeeder extends Seeder
 			 "type_id" =>"1",
 			 "major_id" =>"1",
 			 "progress" => 0,
+        	"instructor_id" => 3,
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("courses")->insert([
+			"name" => "information security finished",
+			"description" => "verry importent",
+			 "type_id" =>"1",
+			 "major_id" =>"1",
+			 "progress" => 100,
+        	"instructor_id" => 3,
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("courses")->insert([
+			"name" => "information security finished",
+			"description" => "verry importent",
+			 "type_id" =>"1",
+			 "major_id" =>"1",
+			 "progress" => 100,
         	"instructor_id" => 3,
 			"created_at" => date("Y-m-d"),
 			"updated_at" => date("Y-m-d")
