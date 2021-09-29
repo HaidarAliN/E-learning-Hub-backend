@@ -73,7 +73,7 @@ class CreateCoursesTable extends Migration
             $table->string('third_answer');
             $table->integer('right_answer');
             $table->boolean('type'); //0 for mcq 1 for true if false
-            $table->integer('quize_id');
+            $table->integer('quiz_id');
             $table->timestamps();
             $table->softDeletes();
         });
