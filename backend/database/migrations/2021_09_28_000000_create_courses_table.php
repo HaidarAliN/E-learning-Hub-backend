@@ -60,8 +60,6 @@ class CreateCoursesTable extends Migration
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->string('path');
             $table->integer('course_id');
             $table->timestamps();
             $table->softDeletes();
