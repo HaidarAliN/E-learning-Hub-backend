@@ -135,14 +135,28 @@ class InstructorCoursesController extends Controller
             $question->type = $request->type;
             $question->quiz_id = $request->quiz_id;
             $question->save();
-            $response['status'] = "added";
-            return response()->json($response);
+            $questions = Question::where('quiz_id', $request->quiz_id)
+                                    ->get();
+            return response()->json($questions);
 
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
         }
 
+    }
+
+    public function getQuizQuestions(Request $request, $id){
+        $inst_id = auth()->user()->id;
+        $course_exist = $this->is_exist($inst_id, $id);
+        if($course_exist){
+            $questions = Question::where('quiz_id', $request->quiz_id)
+                                    ->get();
+            return response()->json($questions);
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response);
+        }
     }
 
     public function is_exist($instructor_id, $course_id){
