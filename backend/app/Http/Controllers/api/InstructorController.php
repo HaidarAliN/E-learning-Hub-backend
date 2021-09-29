@@ -45,4 +45,18 @@ class InstructorController extends Controller
         ], 201);
     }
 
+    public function getOngoingCourses(){
+        $courses = Course::where('instructor_id', auth()->user()->id)
+                        ->where('progress', '<', '100')
+                        ->get();
+        return response()->json($courses, 201);
+    }
+
+    public function getFinishedCourses(){
+        $courses = Course::where('instructor_id', auth()->user()->id)
+                        ->where('progress', '=', '100')
+                        ->get();
+        return response()->json($courses, 201);
+    }
+
 }

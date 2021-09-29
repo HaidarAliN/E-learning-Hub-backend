@@ -38,5 +38,7 @@ Route::group([
 
 ], function ($router) {
     Route::post('/create-course', [InstructorController::class, 'create_course']);    
+    Route::get('/get-Ongoing-courses', [InstructorController::class, 'getOngoingCourses']);    
+    Route::get('/get-Finished-courses', [InstructorController::class, 'getFinishedCourses']);    
 });
 
