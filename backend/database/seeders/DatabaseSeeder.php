@@ -222,5 +222,145 @@ class DatabaseSeeder extends Seeder
 			"updated_at" => date("Y-m-d")
 		]);
 
+		DB::table("users")->insert([
+			"user_type_id" => "3",
+			"first_name" => "Aya",
+			"last_name" => "Hallal",
+			"email" => "student1@ehub.edu",
+			"password" => '$2y$10$eZOe1WxlANUvBcuDo0r9BOz4nNJCkjqH3VOtLzVw.RjIgAlDHic4m', //qweqwe
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("users")->insert([
+			"user_type_id" => "3",
+			"first_name" => "Charbel",
+			"last_name" => "Nehme",
+			"email" => "student2@ehub.edu",
+			"password" => '$2y$10$eZOe1WxlANUvBcuDo0r9BOz4nNJCkjqH3VOtLzVw.RjIgAlDHic4m', //qweqwe
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("users")->insert([
+			"user_type_id" => "3",
+			"first_name" => "Zeinab",
+			"last_name" => "Fawaz",
+			"email" => "student3@ehub.edu",
+			"password" => '$2y$10$eZOe1WxlANUvBcuDo0r9BOz4nNJCkjqH3VOtLzVw.RjIgAlDHic4m', //qweqwe
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("users")->insert([
+			"user_type_id" => "3",
+			"first_name" => "Patrick",
+			"last_name" => "Zaybak",
+			"email" => "student4@ehub.edu",
+			"password" => '$2y$10$eZOe1WxlANUvBcuDo0r9BOz4nNJCkjqH3VOtLzVw.RjIgAlDHic4m', //qweqwe
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("participants")->insert([
+			"user_id" => "4",
+			"course_id" => "1",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("participants")->insert([
+			"user_id" => "5",
+			"course_id" => "1",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("participants")->insert([
+			"user_id" => "6",
+			"course_id" => "1",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("participants")->insert([
+			"user_id" => "7",
+			"course_id" => "2",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("materials")->insert([
+			"name" => "chapter 1",
+			"description" => "intro to the course",
+			"path" => "/test/test.pdf",
+			"course_id" => "1",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("materials")->insert([
+			"name" => "chapter 2",
+			"description" => "intro to the course",
+			"path" => "/test/test.pdf",
+			"course_id" => "1",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("materials")->insert([
+			"name" => "chapter 3",
+			"description" => "intro to the course",
+			"path" => "/test/test.pdf",
+			"course_id" => "1",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("materials")->insert([
+			"name" => "chapter 4",
+			"description" => "intro to the course",
+			"path" => "/test/test.pdf",
+			"course_id" => "1",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("materials")->insert([
+			"name" => "chapter 11",
+			"description" => "intro to the course",
+			"path" => "/test/test.pdf",
+			"course_id" => "2",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("materials")->insert([
+			"name" => "chapter 22",
+			"description" => "intro to the course",
+			"path" => "/test/test.pdf",
+			"course_id" => "2",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("materials")->insert([
+			"name" => "chapter 33",
+			"description" => "intro to the course",
+			"path" => "/test/test.pdf",
+			"course_id" => "2",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("materials")->insert([
+			"name" => "chapter 44",
+			"description" => "intro to the course",
+			"path" => "/test/test.pdf",
+			"course_id" => "2",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
     }
 }

@@ -4,8 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\api\InstructorController;
-// use App\Http\Controllers\api\testController;
-use App\Http\Controllers\api\testController;
+use App\Http\Controllers\api\InstructorCoursesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +19,7 @@ use App\Http\Controllers\api\testController;
 
 
 Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
+    'middleware' => 'api'
 
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
@@ -34,11 +32,18 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'middleware' => ['auth.instructor'],
+    'prefix' => 'instructor'
 
-], function ($router) {
+], function () {
     Route::post('/create-course', [InstructorController::class, 'create_course']);    
     Route::get('/get-Ongoing-courses', [InstructorController::class, 'getOngoingCourses']);    
     Route::get('/get-Finished-courses', [InstructorController::class, 'getFinishedCourses']);    
+    Route::get('/course/dashboard/{id}', [InstructorCoursesController::class, 'courseDashboardInfo']);    
+    Route::get('/course/info/{id}', [InstructorCoursesController::class, 'courseInfo']);    
+    Route::get('/course/get-uploaded-material/{id}', [InstructorCoursesController::class, 'getMaterial']);    
+    Route::post('/course/upload-new-material/{id}', [InstructorCoursesController::class, 'uploadMaterial']);    
 });
+
+
 
