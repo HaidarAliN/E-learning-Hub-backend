@@ -27,7 +27,6 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);    
-    // Route::get('/create-course', [InstructorController::class, 'create_course']);    
 });
 
 Route::group([
@@ -43,6 +42,10 @@ Route::group([
     Route::get('/course/info/{id}', [InstructorCoursesController::class, 'courseInfo']);    
     Route::get('/course/get-uploaded-material/{id}', [InstructorCoursesController::class, 'getMaterial']);    
     Route::post('/course/upload-new-material/{id}', [InstructorCoursesController::class, 'uploadMaterial']);    
+    Route::post('/course/create-quiz/{id}', [InstructorCoursesController::class, 'createQuiz']);    
+    Route::get('/course/get-quiz/{id}', [InstructorCoursesController::class, 'getQuizzes']);    
+    Route::get('/course/get-quiz-questions/{id}', [InstructorCoursesController::class, 'getQuizQuestions']);    
+    Route::post('/course/add-questions/{id}', [InstructorCoursesController::class, 'addQuestions']);    
 });
 
 
