@@ -33,7 +33,78 @@ class DatabaseSeeder extends Seeder
 			"updated_at" => date("Y-m-d")
 		]);
 
-        DB::table("users")->insert([
+		DB::table("course_types")->insert([
+			"name" => "Major",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_types")->insert([
+			"name" => "Elective",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_types")->insert([
+			"name" => "Major elective",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_types")->insert([
+			"name" => "General elective",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_types")->insert([
+			"name" => "Frechman",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_types")->insert([
+			"name" => "Remedial",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_majors")->insert([
+			"name" => "Biology",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_majors")->insert([
+			"name" => "Chemisty",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+		DB::table("course_majors")->insert([
+			"name" => "Economics",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_majors")->insert([
+			"name" => "Art and Science",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_majors")->insert([
+			"name" => "Computer Science",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("course_majors")->insert([
+			"name" => "Engineering",
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("users")->insert([
 			"user_type_id" => "1",
 			"first_name" => "admin",
 			"last_name" => "admin",
@@ -53,6 +124,59 @@ class DatabaseSeeder extends Seeder
 			"updated_at" => date("Y-m-d")
 		]);
 
+		DB::table("users")->insert([
+			"user_type_id" => "2",
+			"first_name" => "Lara",
+			"last_name" => "Makke",
+			"email" => "instructor2@ehub.edu",
+			"password" => '$2y$10$eZOe1WxlANUvBcuDo0r9BOz4nNJCkjqH3VOtLzVw.RjIgAlDHic4m', //qweqwe
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("courses")->insert([
+			"name" => "english",
+			"description" => "this is a new course",
+			 "type_id" =>"1",
+			 "major_id" =>"1",
+			 "progress" => 0,
+        	"instructor_id" => 2,
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("courses")->insert([
+			"name" => "fr",
+			"description" => "this is a second new course",
+			 "type_id" =>"3",
+			 "major_id" =>"3",
+			 "progress" => 0,
+        	"instructor_id" => 2,
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("courses")->insert([
+			"name" => "data structure",
+			"description" => "verry good",
+			 "type_id" =>"1",
+			 "major_id" =>"1",
+			 "progress" => 0,
+        	"instructor_id" => 3,
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
+
+		DB::table("courses")->insert([
+			"name" => "information security",
+			"description" => "verry importent",
+			 "type_id" =>"1",
+			 "major_id" =>"1",
+			 "progress" => 0,
+        	"instructor_id" => 3,
+			"created_at" => date("Y-m-d"),
+			"updated_at" => date("Y-m-d")
+		]);
 
     }
 }

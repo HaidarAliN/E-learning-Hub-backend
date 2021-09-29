@@ -33,8 +33,8 @@ class InstructorController extends Controller
         $course = new Course;
         $course->name = $request->name;
         $course->description = $request->description;
-        $course->type = $request->type;
-        $course->major = $request->major;
+        $course->type_id = $request->type_id;
+        $course->major_id = $request->major_id;
         $course->progress = 0;
         $course->instructor_id = auth()->user()->id;
         $course->save();

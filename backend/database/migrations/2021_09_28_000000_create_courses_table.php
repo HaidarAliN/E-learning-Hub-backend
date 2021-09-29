@@ -18,10 +18,24 @@ class CreateCoursesTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('type');
-            $table->string('major');
+            $table->integer('type_id');
+            $table->integer('major_id');
             $table->integer('progress');
             $table->integer('instructor_id');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('course_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('course_majors', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
