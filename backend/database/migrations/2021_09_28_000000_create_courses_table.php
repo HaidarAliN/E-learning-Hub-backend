@@ -43,7 +43,7 @@ class CreateCoursesTable extends Migration
         Schema::create('participants', function (Blueprint $table) {
             $table->integer('user_id');
             $table->integer('course_id');
-            $table->boolean('status');//0->pending 1->enroller
+            $table->boolean('status')->default('0');//0->pending 1->enroller
             $table->timestamps();
             $table->softDeletes();
         });

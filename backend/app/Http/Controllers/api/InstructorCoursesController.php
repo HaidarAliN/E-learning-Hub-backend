@@ -17,57 +17,42 @@ use App\Models\Question;
 class InstructorCoursesController extends Controller
 {
     public function uploadMaterial(Request $request, $id){
-
-        $inst_id = auth()->user()->id;
-        $course_exist = $this->is_exist($inst_id, $id);
-        if($course_exist){
-        $new_material = new Material;
-        $new_material->name = $request->name;
-        $new_material->description = $request->description;
-        $new_material->path = $request->path;
-        $new_material->course_id = $id;
-        $new_material->save();
-
-        return $this->courseDashboardInfo($id);
-    }else{
-        $response['status'] = "unauth";
-        return response()->json($response);
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $new_material = new Material;
+            $new_material->name = $request->name;
+            $new_material->description = $request->description;
+            $new_material->path = $request->path;
+            $course->materials()->save($new_material);
+            return $this->courseDashboardInfo($id);
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response);
         } 
     }
 
     public function courseDashboardInfo($id){
-
-        $inst_id = auth()->user()->id;
-        $course_exist = $this->is_exist($inst_id, $id);
-        if($course_exist){
-        $lectures = Material::where('course_id', $id)
-                            ->get();
-        $response['lectures_count'] = count($lectures);
-
-        $students = Participant::where('course_id', $id)
-                            ->get();
-
-        $response['students_count'] = count($students);
-
-        $progress = Course::where('instructor_id',  auth()->user()->id)
-                            ->where('id', $id)
-                            ->get(['progress']);
-
-        $response['progress'] = $progress[0]['progress'];
-        return response()->json($response);
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $lectures = $course->materials()->get();
+            $response['lectures_count'] = count($lectures);
+            $course_users = count(Course::find($id)->enrolledUsers()->get());
+            $response['students_count'] = $course_users;
+            $response['progress'] = $course->progress;
+            return response()->json($response);
         }else{
-        $response['status'] = "unauth";
-        return response()->json($response);
+            $response['status'] = "unauth";
+            return response()->json($response);
         } 
     }
     
     public function getMaterial($id){
-
-        $inst_id = auth()->user()->id;
-        $course_exist = $this->is_exist($inst_id, $id);
-        if($course_exist){
-        $lectures = Material::where('course_id', $id)
-                            ->get();
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+        $lectures = $course->materials()->get();
          return response()->json($lectures);  
         }else{
             $response['status'] = "unauth";
@@ -76,14 +61,10 @@ class InstructorCoursesController extends Controller
     }
 
     public function courseInfo($id){
-
-        $inst_id = auth()->user()->id;
-        $course_exist = $this->is_exist($inst_id, $id);
-        if($course_exist){
-
-        $course = Course::where('id', $id)
-                        ->get();
-        return response()->json($course);
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            return response()->json($course);
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
@@ -91,15 +72,13 @@ class InstructorCoursesController extends Controller
     }
 
     public function createQuiz(Request $request, $id){
-
-        $inst_id = auth()->user()->id;
-        $course_exist = $this->is_exist($inst_id, $id);
-        if($course_exist){
-
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $course = Course::find($id);
             $quiz = new Quiz;
             $quiz->name = $request->name;
-            $quiz->course_id = $id;
-            $quiz->save();
+            $course->quizzes()->save($quiz);
             return $this->getQuizzes($id);
         }else{
             $response['status'] = "unauth";
@@ -108,24 +87,28 @@ class InstructorCoursesController extends Controller
     }
 
     public function getQuizzes($id){
-        $inst_id = auth()->user()->id;
-        $course_exist = $this->is_exist($inst_id, $id);
-        if($course_exist){
-            $quizzes = Quiz::where('course_id', $id)
-                            ->get();
-            return response()->json($quizzes);
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $quizzes = $course->quizzes()
+                              ->get();
+            if(count($quizzes)>0){
+                return response()->json($quizzes);
+            }else{
+                $response['status'] = "empty";
+                return response()->json($response);
+            }
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
         }
     }
 
-    public function addQuestions(Request $request, $id){
-
-        $inst_id = auth()->user()->id;
-        $course_exist = $this->is_exist($inst_id, $id);
-        if($course_exist){
-            
+    public function addQuestion(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $quiz = Quiz::find($request->quiz_id);
             $question = new Question;
             $question->content = $request->content;
             $question->first_answer = $request->first_answer;
@@ -133,45 +116,45 @@ class InstructorCoursesController extends Controller
             $question->third_answer = $request->third_answer;
             $question->right_answer = $request->right_answer;
             $question->type = $request->type;
-            $question->quiz_id = $request->quiz_id;
-            $question->save();
-            $questions = Question::where('quiz_id', $request->quiz_id)
-                                    ->get();
+            $quiz->questions()->save($question);
+            $questions =  $quiz->questions()->get();
             return response()->json($questions);
-
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
         }
-
     }
 
     public function getQuizQuestions(Request $request, $id){
-        $inst_id = auth()->user()->id;
-        $course_exist = $this->is_exist($inst_id, $id);
-        if($course_exist){
-            $questions = Question::where('quiz_id', $request->quiz_id)
-                                    ->get();
-            return response()->json($questions);
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $questions = Quiz::find($request->quiz_id)->questions()->get();
+            if(count($questions) > 0){
+                return response()->json($questions);
+            }else{
+                $response['status'] = "empty";
+                return response()->json([$response], 404);
+            }
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
         }
     }
 
-    public function is_exist($instructor_id, $course_id){
+    public function test(){
+        // $user = User::instructor()->get(); use scope example
 
-        $course = Course::where('instructor_id', $instructor_id)
-                            ->where('id', $course_id)
-                            ->get('id');
+        //student endroll to course
+        // $course = Course::find(12);
+        // User::find(auth()->user()->id)->enrolledCourses()->save($course);
         
-         $course_exist = count($course);
-        if($course_exist == 1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        //intructer accept course request access
+        $course = Course::find(12);//12 is the course id
+        $update = User::find(auth()->user()->id)->enrolledCourses()->find($course)->pivot;
+        $update->status = 1;
+        $update->save();
+        return response()->json($update);
     }
 
 

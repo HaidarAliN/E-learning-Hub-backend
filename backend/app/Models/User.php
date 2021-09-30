@@ -60,4 +60,20 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+
+    public function courses(){
+        return $this->hasMany(Course::class, 'instructor_id');
+    }
+
+    public function enrolledCourses(){
+        return $this->belongsToMany(Course::class, 'participants', 'user_id', 'course_id')->withPivot('status');
+    }
+
+    public function scopeInstructor($query){
+        $type = UserType::where('name','instructor')->first();
+        return $query->where('user_type_id',$type->id);
+    }
+    
+
+
 }

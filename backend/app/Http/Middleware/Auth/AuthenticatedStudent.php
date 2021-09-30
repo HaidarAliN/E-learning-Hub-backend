@@ -16,7 +16,7 @@ class AuthenticatedStudent
         $user = auth()->user()->user_type_id;
         if($user != 3){
             $response['access'] = "denied";
-            return response()->json($response);
+            return response()->json([$response], 403);
         }
 
         return $next($request);

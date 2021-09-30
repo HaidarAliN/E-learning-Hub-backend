@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 		]);
 
         DB::table("user_types")->insert([
-			"name" => "instuctor",
+			"name" => "instructor",
 			"created_at" => date("Y-m-d"),
 			"updated_at" => date("Y-m-d")
 		]);

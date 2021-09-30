@@ -18,9 +18,6 @@ class InstructorController extends Controller
      *
      * @return void
      */
-    // public function __construct() {
-    //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    // }
 
     /**
      * Register a User.
@@ -30,14 +27,14 @@ class InstructorController extends Controller
 
     public function create_course(Request $request){
 
+        $user = User::find(auth()->user()->id);
         $course = new Course;
         $course->name = $request->name;
         $course->description = $request->description;
         $course->type_id = $request->type_id;
         $course->major_id = $request->major_id;
         $course->progress = 0;
-        $course->instructor_id = auth()->user()->id;
-        $course->save();
+        $user->courses()->save($course);
 
         return response()->json([
             'message' => 'User successfully registered',
@@ -46,14 +43,16 @@ class InstructorController extends Controller
     }
 
     public function getOngoingCourses(){
-        $courses = Course::where('instructor_id', auth()->user()->id)
+        $user = User::find(auth()->user()->id);
+        $courses = $user->courses()
                         ->where('progress', '<', '100')
                         ->get();
         return response()->json($courses, 201);
     }
 
     public function getFinishedCourses(){
-        $courses = Course::where('instructor_id', auth()->user()->id)
+        $user = User::find(auth()->user()->id);
+        $courses = $user->courses()
                         ->where('progress', '=', '100')
                         ->get();
         return response()->json($courses, 201);
