@@ -35,17 +35,21 @@ Route::group([
     'prefix' => 'instructor'
 
 ], function () {
-    Route::post('/create-course', [InstructorController::class, 'create_course']);//    
-    Route::get('/get-Ongoing-courses', [InstructorController::class, 'getOngoingCourses']);//    
-    Route::get('/get-Finished-courses', [InstructorController::class, 'getFinishedCourses']);//    
-    Route::get('/course/dashboard/{id}', [InstructorCoursesController::class, 'courseDashboardInfo']);//    
-    Route::get('/course/info/{id}', [InstructorCoursesController::class, 'courseInfo']);// 
-    Route::get('/course/get-uploaded-material/{id}', [InstructorCoursesController::class, 'getMaterial']);//    
-    Route::post('/course/upload-new-material/{id}', [InstructorCoursesController::class, 'uploadMaterial']);//    
-    Route::post('/course/create-quiz/{id}', [InstructorCoursesController::class, 'createQuiz']);//    
-    Route::get('/course/get-quiz/{id}', [InstructorCoursesController::class, 'getQuizzes']);//   
-    Route::post('/course/get-quiz-questions/{id}', [InstructorCoursesController::class, 'getQuizQuestions']);//    
-    Route::post('/course/add-questions/{id}', [InstructorCoursesController::class, 'addQuestions']); ///   
+    Route::post('/create-course', [InstructorController::class, 'create_course']);   
+    Route::get('/get-Ongoing-courses', [InstructorController::class, 'getOngoingCourses']);   
+    Route::get('/get-Finished-courses', [InstructorController::class, 'getFinishedCourses']);   
+    Route::get('/course/dashboard/{id}', [InstructorCoursesController::class, 'courseDashboardInfo']);   
+    Route::get('/course/info/{id}', [InstructorCoursesController::class, 'courseInfo']);
+    Route::get('/course/get-uploaded-material/{id}', [InstructorCoursesController::class, 'getMaterial']);  
+    Route::post('/course/edit-material/{id}', [InstructorCoursesController::class, 'editMaterial']);  
+    Route::post('/course/remove-material/{id}', [InstructorCoursesController::class, 'removeMaterial']);  
+    Route::post('/course/upload-new-material/{id}', [InstructorCoursesController::class, 'uploadMaterial']); 
+    Route::post('/course/create-quiz/{id}', [InstructorCoursesController::class, 'createQuiz']);  
+    Route::get('/course/get-quiz/{id}', [InstructorCoursesController::class, 'getQuizzes']); 
+    Route::post('/course/get-quiz-questions/{id}', [InstructorCoursesController::class, 'getQuizQuestions']);    
+    Route::post('/course/add-question/{id}', [InstructorCoursesController::class, 'addQuestion']);  
+    Route::post('/course/edit-question/{id}', [InstructorCoursesController::class, 'editQuestion']);  
+    Route::post('/course/remove-question/{id}', [InstructorCoursesController::class, 'removeQuestion']);  
     Route::get('/test', [InstructorCoursesController::class, 'test']);    
 });
 

@@ -53,7 +53,12 @@ class InstructorCoursesController extends Controller
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
         $lectures = $course->materials()->get();
-         return response()->json($lectures);  
+        if($lecture){
+            return response()->json($lectures);  
+        }else{
+            $response['status'] = "empty";
+            return response()->json([$response], 404);
+        }
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
@@ -108,20 +113,80 @@ class InstructorCoursesController extends Controller
         $user_id = auth()->user()->id;
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
-            $quiz = Quiz::find($request->quiz_id);
-            $question = new Question;
-            $question->content = $request->content;
-            $question->first_answer = $request->first_answer;
-            $question->second_answer = $request->second_answer;
-            $question->third_answer = $request->third_answer;
-            $question->right_answer = $request->right_answer;
-            $question->type = $request->type;
-            $quiz->questions()->save($question);
-            $questions =  $quiz->questions()->get();
-            return response()->json($questions);
+            $quiz = $course->quizzes()->find($request->quiz_id);
+            if($quiz){
+                $question = new Question;
+                $question->content = $request->content;
+                $question->first_answer = $request->first_answer;
+                $question->second_answer = $request->second_answer;
+                $question->third_answer = $request->third_answer;
+                $question->right_answer = $request->right_answer;
+                $question->type = $request->type;
+                $quiz->questions()->save($question);
+                $questions =  $quiz->questions()->get();
+                return response()->json($questions);
+            }else{
+                $response['status'] = "empty";
+                return response()->json([$response], 404);
+            }  
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
+        }
+    }
+
+    public function editQuestion(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $quiz = $course->quizzes()->find($request->quiz_id);
+            if($quiz){
+                $question = $quiz->questions()->find($request->id);
+                if($question){
+                    $question->content = $request->content;
+                    $question->first_answer = $request->first_answer;
+                    $question->second_answer = $request->second_answer;
+                    $question->third_answer = $request->third_answer;
+                    $question->right_answer = $request->right_answer;
+                    $question->type = $request->type;
+                    $question->save();
+                    return response()->json($question);
+                }else{
+                    $response['status'] = "empty";
+                    return response()->json([$response], 404);
+                }
+            }else{
+                $response['status'] = "empty";
+                return response()->json([$response], 404);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json([$response], 403);
+        }
+    }
+
+    public function removeQuestion(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $quiz = $course->quizzes()->find($request->quiz_id);
+            if($quiz){
+                $question = $quiz->questions()->find($request->id);
+                if($question){
+                    $question->delete();
+                    $response['status'] = "deleted";
+                return response()->json($response); 
+                }else{
+                    $response['status'] = "empty";
+                    return response()->json([$response], 404);
+                }
+            }else{
+                $response['status'] = "empty";
+                return response()->json([$response], 404);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json([$response], 403);
         }
     }
 
@@ -140,6 +205,46 @@ class InstructorCoursesController extends Controller
             $response['status'] = "unauth";
             return response()->json($response);
         }
+    }
+
+    public function editMaterial(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $lecture = $course->materials()->find($request->id);
+            if($lecture){
+                $lecture->name = $request->name;
+                $lecture->description = $request->description;
+                $lecture->path = $request->path;
+                $lecture->save();
+                return response()->json($lecture);  
+            }else{
+                $response['status'] = "empty";
+                return response()->json([$response], 404);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response);
+        } 
+    }
+
+    public function removeMaterial(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $lecture = $course->materials()->find($request->id);
+            if($lecture){
+                $lecture->delete();
+                $response['status'] = "deleted";
+                return response()->json($response);  
+            }else{
+                $response['status'] = "Not found";
+                return response()->json([$response], 404);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response);
+        } 
     }
 
     public function test(){
