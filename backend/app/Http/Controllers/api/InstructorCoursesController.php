@@ -76,6 +76,23 @@ class InstructorCoursesController extends Controller
         }                 
     }
 
+    public function editCourseInfo(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $course->name = $request->name;
+            $course->description = $request->description;
+            $course->type_id = $request->type_id;
+            $course->major_id = $request->major_id;
+            $course->progress = $request->progress;
+            $course->save();
+            return response()->json($course);
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response);
+        }                 
+    }
+
     public function createQuiz(Request $request, $id){
         $user_id = auth()->user()->id;
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
@@ -244,6 +261,56 @@ class InstructorCoursesController extends Controller
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
+        } 
+    }
+
+    public function enrollStudent(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $user = User::find($request->student_id)->enrolledCourses()->find($course);
+            if($user){
+                $participant = $user->pivot;
+                if($participant){
+                    $participant->status = 1;
+                    $participant->save();
+                    return response()->json($participant);
+                }else{
+                    $response['status'] = "Not found";
+                    return response()->json([$response], 404);
+                }
+            }else{
+                $response['status'] = "Not found";
+                return response()->json([$response], 404);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json([$response], 403);
+        } 
+    }
+
+    public function removeStudent(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $user = User::find($request->student_id)->enrolledCourses()->find($course);
+            if($user){
+                $participant = $user->pivot;
+                if($participant){
+                    $participant->delete();
+                    $response['status'] = "deleted";
+                    return response()->json($response);
+                }else{
+                    $response['status'] = "Not found";
+                    return response()->json([$response], 404);
+                }
+            }else{
+                $response['status'] = "Not found";
+                return response()->json([$response], 404);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json([$response], 403);
         } 
     }
 

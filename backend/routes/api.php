@@ -40,6 +40,7 @@ Route::group([
     Route::get('/get-Finished-courses', [InstructorController::class, 'getFinishedCourses']);   
     Route::get('/course/dashboard/{id}', [InstructorCoursesController::class, 'courseDashboardInfo']);   
     Route::get('/course/info/{id}', [InstructorCoursesController::class, 'courseInfo']);
+    Route::post('/course/edit-info/{id}', [InstructorCoursesController::class, 'editCourseInfo']);
     Route::get('/course/get-uploaded-material/{id}', [InstructorCoursesController::class, 'getMaterial']);  
     Route::post('/course/edit-material/{id}', [InstructorCoursesController::class, 'editMaterial']);  
     Route::post('/course/remove-material/{id}', [InstructorCoursesController::class, 'removeMaterial']);  
@@ -50,6 +51,8 @@ Route::group([
     Route::post('/course/add-question/{id}', [InstructorCoursesController::class, 'addQuestion']);  
     Route::post('/course/edit-question/{id}', [InstructorCoursesController::class, 'editQuestion']);  
     Route::post('/course/remove-question/{id}', [InstructorCoursesController::class, 'removeQuestion']);  
+    Route::post('/course/enroll-student/{id}', [InstructorCoursesController::class, 'enrollStudent']);  
+    Route::post('/course/remove-student/{id}', [InstructorCoursesController::class, 'removeStudent']);  
     Route::get('/test', [InstructorCoursesController::class, 'test']);    
 });
 

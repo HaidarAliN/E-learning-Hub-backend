@@ -45,17 +45,27 @@ class InstructorController extends Controller
     public function getOngoingCourses(){
         $user = User::find(auth()->user()->id);
         $courses = $user->courses()
-                        ->where('progress', '<', '100')
+                        ->ongoingCourses()
                         ->get();
-        return response()->json($courses, 201);
+        if(count($courses) > 0){
+            return response()->json($courses, 201);
+        }else{
+            $response['status'] = "empty";
+            return response()->json([$response], 404);
+        }
     }
 
     public function getFinishedCourses(){
         $user = User::find(auth()->user()->id);
         $courses = $user->courses()
-                        ->where('progress', '=', '100')
+                        ->finishedCourses()
                         ->get();
-        return response()->json($courses, 201);
+        if(count($courses) > 0){
+            return response()->json($courses, 201);
+        }else{
+            $response['status'] = "empty";
+            return response()->json([$response], 404);
+        }
     }
 
 }
