@@ -13,6 +13,7 @@ use App\Models\Material;
 use App\Models\Participant;
 use App\Models\Quiz;
 use App\Models\Question;
+use App\Models\Notification;
 
 class InstructorCoursesController extends Controller
 {
@@ -57,7 +58,7 @@ class InstructorCoursesController extends Controller
             return response()->json($lectures);  
         }else{
             $response['status'] = "empty";
-            return response()->json([$response], 404);
+            return response()->json($response, 404);
         }
         }else{
             $response['status'] = "unauth";
@@ -144,7 +145,7 @@ class InstructorCoursesController extends Controller
                 return response()->json($questions);
             }else{
                 $response['status'] = "empty";
-                return response()->json([$response], 404);
+                return response()->json($response, 404);
             }  
         }else{
             $response['status'] = "unauth";
@@ -195,15 +196,15 @@ class InstructorCoursesController extends Controller
                 return response()->json($response); 
                 }else{
                     $response['status'] = "empty";
-                    return response()->json([$response], 404);
+                    return response()->json($response, 404);
                 }
             }else{
                 $response['status'] = "empty";
-                return response()->json([$response], 404);
+                return response()->json($response, 404);
             }
         }else{
             $response['status'] = "unauth";
-            return response()->json([$response], 403);
+            return response()->json($response, 403);
         }
     }
 
@@ -216,7 +217,7 @@ class InstructorCoursesController extends Controller
                 return response()->json($questions);
             }else{
                 $response['status'] = "empty";
-                return response()->json([$response], 404);
+                return response()->json($response, 404);
             }
         }else{
             $response['status'] = "unauth";
@@ -237,7 +238,7 @@ class InstructorCoursesController extends Controller
                 return response()->json($lecture);  
             }else{
                 $response['status'] = "empty";
-                return response()->json([$response], 404);
+                return response()->json($response, 404);
             }
         }else{
             $response['status'] = "unauth";
@@ -268,24 +269,36 @@ class InstructorCoursesController extends Controller
         $user_id = auth()->user()->id;
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
-            $user = User::find($request->student_id)->enrolledCourses()->find($course);
+            $user = User::find($request->student_id)->enrolledCourses()->find($course);//check if student in the pending list
             if($user){
-                $participant = $user->pivot;
+                $participant = $user->pivot;//resturn the pivot table raw
                 if($participant){
-                    $participant->status = 1;
+                    $participant->status = 1;//update status from pending to registerd
                     $participant->save();
+
+                    $token = User::find($request->student_id)->device_token;//get firebase token of the instructor
+                    $message="You have been Enrolled in the $course->name course";
+                    $title="Enrollment Acceptance";
+                    $this->sendNotification($token, $title, $message);//send push notification to the instructor
+                    $notification = new Notification;//create new notification in database
+                    $notification->sent_to = $request->student_id;
+                    $notification->body = $message;
+                    $notification->course_id = $id;
+                    $notification->save();//save the notifcation in the database
+
+
                     return response()->json($participant);
                 }else{
                     $response['status'] = "Not found";
-                    return response()->json([$response], 404);
+                    return response()->json($response, 200);
                 }
             }else{
                 $response['status'] = "Not found";
-                return response()->json([$response], 404);
+                return response()->json($response, 200);
             }
         }else{
             $response['status'] = "unauth";
-            return response()->json([$response], 403);
+            return response()->json($response, 403);
         } 
     }
 
@@ -302,16 +315,56 @@ class InstructorCoursesController extends Controller
                     return response()->json($response);
                 }else{
                     $response['status'] = "Not found";
-                    return response()->json([$response], 404);
+                    return response()->json($response, 404);
                 }
             }else{
                 $response['status'] = "Not found";
-                return response()->json([$response], 404);
+                return response()->json($response, 404);
             }
         }else{
             $response['status'] = "unauth";
-            return response()->json([$response], 403);
+            return response()->json($response, 403);
         } 
+    }
+
+    public function sendNotification($tokento, $title, $subject)
+    {
+        // $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
+        $SERVER_API_KEY = 'AAAA9XhgPRI:APA91bGhQasdew-FbmK29yQY_inJicjg7f4jvbscZ6AWfq9W-F-4vplMfm6hkvzF9AWhd4yij6GhH4sjhgdF5F_UGEcWlA5rar7oZaFmzYZDcUCKeNDGlQJ7ENiWfOWOuf-3AE93FcpY';
+  
+        $token = $tokento;  
+        $from =  $SERVER_API_KEY;
+        $msg = array
+              (
+                'body'  => "$subject",
+                'title' => "$title",
+                'receiver' => 'erw',
+                'icon'  => "https://image.flaticon.com/icons/png/512/270/270014.png",/*Default Icon*/
+                'sound' => 'mySound'/*Default sound*/
+              );
+
+        $fields = array
+                (
+                    'to'        => $token,
+                    'notification'  => $msg
+                );
+
+        $headers = array
+                (
+                    'Authorization: key=' . $from,
+                    'Content-Type: application/json'
+                );
+        //#Send Reponse To FireBase Server 
+        $ch = curl_init();
+        curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
+        curl_setopt( $ch,CURLOPT_POST, true );
+        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+        $result = curl_exec($ch );
+        // dd($result);
+        curl_close( $ch );
     }
 
     public function test(){

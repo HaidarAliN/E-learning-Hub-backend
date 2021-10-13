@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\api\InstructorController;
 use App\Http\Controllers\api\InstructorCoursesController;
+use App\Http\Controllers\api\StudentController;
+use App\Http\Controllers\api\StudentCourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +22,6 @@ use App\Http\Controllers\api\InstructorCoursesController;
 
 Route::group([
     'middleware' => 'api'
-
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -31,9 +32,18 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
+    'middleware' => ['auth.admin'],
+    'prefix' => 'admin'
+
+], function () {
+    Route::post('/register-student', [AuthController::class, 'registerStudent']);   
+    Route::post('/register-intructor', [AuthController::class, 'registerInstructor']);   
+});
+
+Route::group([
+    'middleware' => 'api',
     'middleware' => ['auth.instructor'],
     'prefix' => 'instructor'
-
 ], function () {
     Route::post('/create-course', [InstructorController::class, 'create_course']);   
     Route::get('/get-Ongoing-courses', [InstructorController::class, 'getOngoingCourses']);   
@@ -55,6 +65,28 @@ Route::group([
     Route::post('/course/remove-student/{id}', [InstructorCoursesController::class, 'removeStudent']);  
     Route::get('/test', [InstructorCoursesController::class, 'test']);    
 });
+
+Route::group([
+    'middleware' => 'api',
+    'middleware' => ['auth.student'],
+    'prefix' => 'student'
+], function () {
+    Route::get('/test', [StudentController::class, 'test']);   
+    Route::post('/search-for-course', [StudentController::class, 'getCourseByName']);  
+    Route::get('/get-ongoing-courses', [StudentController::class, 'getOngoingCourses']);   
+    Route::get('/get-finished-courses', [StudentController::class, 'getFinishedCourses']);   
+    Route::get('/get-notifications', [StudentController::class, 'getNotifications']);   
+    Route::get('/get-user-info', [StudentController::class, 'getUserInfo']);   
+    Route::post('/enroll-in-course', [StudentController::class, 'enrollInCourse']);   
+    Route::get('/course/get-upload-materials/{id}', [StudentCourseController::class, 'getMaterials']);
+    Route::get('/course/dashboard/{id}', [StudentCourseController::class, 'courseDashboardInfo']);   
+    Route::get('/course/get-quizzes/{id}', [StudentCourseController::class, 'courseGetQuizzes']);   
+    Route::get('/course/start-quiz/{id}', [StudentCourseController::class, 'courseStartQuiz']);   
+    Route::get('/course/get-quiz-questions/{quizId}', [StudentCourseController::class, 'courseGetQuizzeQuestions']);   
+    Route::post('/course/answer-quiz-questions/{quizId}', [StudentCourseController::class, 'courseAnswerQuizzeQuestion']);   
+});
+
+
 
 
 

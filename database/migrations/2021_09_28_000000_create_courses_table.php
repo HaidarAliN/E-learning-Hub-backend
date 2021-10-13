@@ -71,10 +71,30 @@ class CreateCoursesTable extends Migration
             $table->text('content');
             $table->string('first_answer');
             $table->string('second_answer');
-            $table->string('third_answer')->nullable();;
+            $table->string('third_answer')->nullable();
             $table->integer('right_answer');
             $table->boolean('type'); //0 for mcq 1 for true if false
             $table->integer('quiz_id');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('student_submissions', function (Blueprint $table) {
+            $table->id();
+            $table->integer('student_id');
+            $table->integer('quiz_id');
+            $table->boolean('submited')->default('0'); //0 for pending 1 for submited
+            $table->string('score')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('student_answers', function (Blueprint $table) {
+            $table->id();
+            $table->integer('student_id');
+            $table->integer('submission_id');
+            $table->integer('question_id');
+            $table->boolean('answer'); //0 for false 1 for true
             $table->timestamps();
             $table->softDeletes();
         });

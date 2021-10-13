@@ -46,6 +46,13 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    public function registerStudent(){
+        dd('hi');
+    }
+
+    public function registerInstructor(){
+        dd('hi');
+    }
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:100|unique:users',
