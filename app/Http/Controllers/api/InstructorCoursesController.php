@@ -14,6 +14,7 @@ use App\Models\Participant;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Notification;
+use DB;
 
 class InstructorCoursesController extends Controller
 {
@@ -321,6 +322,21 @@ class InstructorCoursesController extends Controller
                 $response['status'] = "Not found";
                 return response()->json($response, 404);
             }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response, 403);
+        } 
+    }
+
+    public function getStudentInfo($id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $participant = User::join('participants', 'users.id', '=', 'participants.user_id')
+            ->where('participants.course_id',$id)
+            ->orderBy('participants.status')
+            ->get(['users.*','participants.*']);
+            return response()->json($participant, 200);
         }else{
             $response['status'] = "unauth";
             return response()->json($response, 403);

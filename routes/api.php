@@ -63,6 +63,7 @@ Route::group([
     Route::post('/course/remove-question/{id}', [InstructorCoursesController::class, 'removeQuestion']);  
     Route::post('/course/enroll-student/{id}', [InstructorCoursesController::class, 'enrollStudent']);  
     Route::post('/course/remove-student/{id}', [InstructorCoursesController::class, 'removeStudent']);  
+    Route::get('/course/get-student-info/{id}', [InstructorCoursesController::class, 'getStudentInfo']);  
     Route::get('/test', [InstructorCoursesController::class, 'test']);    
 });
 
