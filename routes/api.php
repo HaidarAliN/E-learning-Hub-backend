@@ -48,6 +48,9 @@ Route::group([
     Route::post('/create-course', [InstructorController::class, 'create_course']);   
     Route::get('/get-Ongoing-courses', [InstructorController::class, 'getOngoingCourses']);   
     Route::get('/get-Finished-courses', [InstructorController::class, 'getFinishedCourses']);   
+    Route::get('/dashboard', [InstructorController::class, 'getDashboard']);   
+    Route::get('/navInfo', [InstructorController::class, 'getNavInfo']);   
+    Route::get('/get-course-types', [InstructorController::class, 'getCourseTypes']);   
     Route::get('/course/dashboard/{id}', [InstructorCoursesController::class, 'courseDashboardInfo']);   
     Route::get('/course/info/{id}', [InstructorCoursesController::class, 'courseInfo']);
     Route::post('/course/edit-info/{id}', [InstructorCoursesController::class, 'editCourseInfo']);

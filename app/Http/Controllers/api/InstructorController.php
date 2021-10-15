@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Validator;
 use App\Models\Course;
+use App\Models\CourseType;
 
 
 class InstructorController extends Controller
@@ -45,27 +46,55 @@ class InstructorController extends Controller
     public function getOngoingCourses(){
         $user = User::find(auth()->user()->id);
         $courses = $user->courses()
-                        ->ongoingCourses()
-                        ->get();
+                            ->join('course_types', 'courses.type_id', '=', 'course_types.id')
+                            ->ongoingCourses()
+                            ->get(['courses.*','course_types.name as course_type']);
         if(count($courses) > 0){
-            return response()->json($courses, 201);
+            return response()->json($courses, 200);
         }else{
             $response['status'] = "empty";
-            return response()->json([$response], 404);
+            return response()->json($response, 200);
         }
     }
 
     public function getFinishedCourses(){
         $user = User::find(auth()->user()->id);
         $courses = $user->courses()
-                        ->finishedCourses()
-                        ->get();
+            ->join('course_types', 'courses.type_id', '=', 'course_types.id')
+            ->finishedCourses()
+            ->get(['courses.*','course_types.name as course_type']);
         if(count($courses) > 0){
-            return response()->json($courses, 201);
+            return response()->json($courses, 200);
         }else{
             $response['status'] = "empty";
-            return response()->json([$response], 404);
+            return response()->json($response, 200);
         }
+    }
+
+    public function getDashboard(){
+        $user = User::find(auth()->user()->id);
+        $count = count($user->courses()->get());
+        $students = count($user->courses()->get());
+        $finished_classes = count($user->courses()->get());
+        $response['courses_count'] = $count;
+        $response['student_count'] = $count;
+        $response['Quizzes_done'] = $count;
+        return response()->json($response, 201);
+
+    }
+
+    public function getNavInfo(){
+        $user = User::find(auth()->user()->id);
+        $response['name'] = $user->first_name;
+        $notification_count = count($user->notifications()->notRead()->get());
+        $response['notification_count'] = $notification_count;
+        return response()->json($response, 200);
+
+    }
+
+    public function getCourseTypes(){
+        $response = CourseType::get();
+        return response()->json($response, 200);
     }
 
 }

@@ -21,6 +21,10 @@ class Course extends Model
         return $this->hasMany(Material::class, 'course_id');
     }
 
+    public function types(){
+        return $this->belongsTo(CourseType::class, 'id');
+    }
+
     public function enrolledUsers(){
         return $this->belongsToMany(User::class, 'participants', 'course_id', 'user_id')->withPivot('status');
     }

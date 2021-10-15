@@ -71,6 +71,10 @@ class InstructorCoursesController extends Controller
         $user_id = auth()->user()->id;
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
+            $course= User::find($user_id)->courses()
+                            ->join('course_types', 'courses.type_id', '=', 'course_types.id')
+                            ->where('courses.id', $id)
+                            ->get(['courses.*','course_types.name as course_type']);
             return response()->json($course);
         }else{
             $response['status'] = "unauth";
@@ -85,7 +89,6 @@ class InstructorCoursesController extends Controller
             $course->name = $request->name;
             $course->description = $request->description;
             $course->type_id = $request->type_id;
-            $course->major_id = $request->major_id;
             $course->progress = $request->progress;
             $course->save();
             return response()->json($course);
@@ -336,7 +339,13 @@ class InstructorCoursesController extends Controller
             ->where('participants.course_id',$id)
             ->orderBy('participants.status')
             ->get(['users.*','participants.*']);
-            return response()->json($participant, 200);
+            if(count($participant)>0){
+
+                return response()->json($participant, 200);
+            }else{
+                $response['status'] = "empty";
+            return response()->json($response, 200);
+            }
         }else{
             $response['status'] = "unauth";
             return response()->json($response, 403);

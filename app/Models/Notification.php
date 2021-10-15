@@ -12,4 +12,8 @@ class Notification extends Model
     public function sentTo(){
         return $this->belongsTo(User::class, 'id');
     }
+
+    public function scopeNotRead($query){
+        return $query->where('is_read',0);
+    }
 }
