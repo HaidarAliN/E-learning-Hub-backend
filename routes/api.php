@@ -55,6 +55,7 @@ Route::group([
     Route::get('/course/info/{id}', [InstructorCoursesController::class, 'courseInfo']);
     Route::post('/course/edit-info/{id}', [InstructorCoursesController::class, 'editCourseInfo']);
     Route::get('/course/get-uploaded-material/{id}', [InstructorCoursesController::class, 'getMaterial']);  
+    Route::get('/course/get-material-by-id/{id}', [InstructorCoursesController::class, 'getMaterialById']);  
     Route::post('/course/edit-material/{id}', [InstructorCoursesController::class, 'editMaterial']);  
     Route::post('/course/remove-material/{id}', [InstructorCoursesController::class, 'removeMaterial']);  
     Route::post('/course/upload-new-material/{id}', [InstructorCoursesController::class, 'uploadMaterial']); 

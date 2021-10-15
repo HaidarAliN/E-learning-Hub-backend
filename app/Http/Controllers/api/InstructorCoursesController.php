@@ -55,7 +55,7 @@ class InstructorCoursesController extends Controller
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
         $lectures = $course->materials()->get();
-        if($lecture){
+        if($lectures){
             return response()->json($lectures);  
         }else{
             $response['status'] = "empty";
@@ -65,6 +65,19 @@ class InstructorCoursesController extends Controller
             $response['status'] = "unauth";
             return response()->json($response);
         }                   
+    }
+
+    public function getMaterialById($id){
+        $user_id = auth()->user()->id;
+        $lecture = Material::find($id);
+        if($lecture){
+            return response()->json($lecture);  
+        }else{
+            $response['status'] = "empty";
+            return response()->json($response, 404);
+        }
+        
+        
     }
 
     public function courseInfo($id){
@@ -237,7 +250,7 @@ class InstructorCoursesController extends Controller
             if($lecture){
                 $lecture->name = $request->name;
                 $lecture->description = $request->description;
-                $lecture->path = $request->path;
+                // $lecture->path = $request->path;
                 $lecture->save();
                 return response()->json($lecture);  
             }else{
