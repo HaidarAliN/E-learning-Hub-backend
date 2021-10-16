@@ -33,7 +33,6 @@ class InstructorCoursesController extends Controller
             $pdf_decoded = base64_decode ($file);
             $destinationPath = public_path() . "/UploadedMaterials/" . $file_name;             
             file_put_contents($destinationPath, $pdf_decoded);
-            //                                                 File::delete('UploadedMaterials/qwe.pdf');
             $new_material = new Material;
             $new_material->name = $request->name;
             $new_material->description = $request->description;
