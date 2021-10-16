@@ -15,6 +15,10 @@ use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Notification;
 use DB;
+// use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Storage;
+use File;
 
 class InstructorCoursesController extends Controller
 {
@@ -22,10 +26,18 @@ class InstructorCoursesController extends Controller
         $user_id = auth()->user()->id;
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
+            $file = $request->base64file;
+            $file_name =  $request->name;
+            $file_name = "$file_name(".rand(10,1000).")".'.'.'pdf';
+            $path=public_path();
+            $pdf_decoded = base64_decode ($file);
+            $destinationPath = public_path() . "/UploadedMaterials/" . $file_name;             
+            file_put_contents($destinationPath, $pdf_decoded);
+            //                                                 File::delete('UploadedMaterials/qwe.pdf');
             $new_material = new Material;
             $new_material->name = $request->name;
             $new_material->description = $request->description;
-            $new_material->path = $request->path;
+            $new_material->path = $file_name;
             $course->materials()->save($new_material);
             return $this->courseDashboardInfo($id);
         }else{
@@ -269,6 +281,7 @@ class InstructorCoursesController extends Controller
         if($course){
             $lecture = $course->materials()->find($request->id);
             if($lecture){
+                File::delete("UploadedMaterials/$lecture->path");
                 $lecture->delete();
                 $response['status'] = "deleted";
                 return response()->json($response);  
