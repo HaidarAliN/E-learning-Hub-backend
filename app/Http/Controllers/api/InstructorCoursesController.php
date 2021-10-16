@@ -129,8 +129,8 @@ class InstructorCoursesController extends Controller
             $course = Course::find($id);
             $quiz = new Quiz;
             $quiz->name = $request->name;
-            $course->quizzes()->save($quiz);
-            return $this->getQuizzes($id);
+            $quiz = $course->quizzes()->save($quiz);
+            return response()->json($quiz);
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
@@ -187,14 +187,13 @@ class InstructorCoursesController extends Controller
         if($course){
             $quiz = $course->quizzes()->find($request->quiz_id);
             if($quiz){
-                $question = $quiz->questions()->find($request->id);
+                $question = $quiz->questions()->find($request->question_id);
                 if($question){
                     $question->content = $request->content;
                     $question->first_answer = $request->first_answer;
                     $question->second_answer = $request->second_answer;
                     $question->third_answer = $request->third_answer;
                     $question->right_answer = $request->right_answer;
-                    $question->type = $request->type;
                     $question->save();
                     return response()->json($question);
                 }else{
@@ -217,7 +216,7 @@ class InstructorCoursesController extends Controller
         if($course){
             $quiz = $course->quizzes()->find($request->quiz_id);
             if($quiz){
-                $question = $quiz->questions()->find($request->id);
+                $question = $quiz->questions()->find($request->question_id);
                 if($question){
                     $question->delete();
                     $response['status'] = "deleted";
@@ -240,12 +239,31 @@ class InstructorCoursesController extends Controller
         $user_id = auth()->user()->id;
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
-            $questions = Quiz::find($request->quiz_id)->questions()->get();
-            if(count($questions) > 0){
-                return response()->json($questions);
+            $questions = Quiz::find($request->quiz_id);
+            if($questions){
+                $question = $questions->questions()->get();
+                return response()->json($question);
             }else{
                 $response['status'] = "empty";
-                return response()->json($response, 404);
+                return response()->json($response, 200);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response);
+        }
+    }
+
+    public function getQuizQuestionById(Request $request, $id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $questions = Quiz::find($request->quiz_id);
+            if($questions){
+                $question = $questions->questions()->find($request->question_id);
+                return response()->json($question);
+            }else{
+                $response['status'] = "empty";
+                return response()->json($response, 200);
             }
         }else{
             $response['status'] = "unauth";

@@ -62,6 +62,7 @@ Route::group([
     Route::post('/course/create-quiz/{id}', [InstructorCoursesController::class, 'createQuiz']);  
     Route::get('/course/get-quiz/{id}', [InstructorCoursesController::class, 'getQuizzes']); 
     Route::post('/course/get-quiz-questions/{id}', [InstructorCoursesController::class, 'getQuizQuestions']);    
+    Route::post('/course/get-quiz-question-by-id/{id}', [InstructorCoursesController::class, 'getQuizQuestionById']);    
     Route::post('/course/add-question/{id}', [InstructorCoursesController::class, 'addQuestion']);  
     Route::post('/course/edit-question/{id}', [InstructorCoursesController::class, 'editQuestion']);  
     Route::post('/course/remove-question/{id}', [InstructorCoursesController::class, 'removeQuestion']);  
