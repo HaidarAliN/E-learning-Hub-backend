@@ -83,8 +83,10 @@ Route::group([
     Route::post('/search-for-course', [StudentController::class, 'getCourseByName']);  
     Route::get('/get-ongoing-courses', [StudentController::class, 'getOngoingCourses']);   
     Route::get('/get-finished-courses', [StudentController::class, 'getFinishedCourses']);   
-    Route::get('/get-notifications', [StudentController::class, 'getNotifications']);   
+    Route::get('/get-notifications', [StudentController::class, 'getNotifications']); 
+    Route::post('/notifications/mark-read', [StudentController::class, 'setNotificationAsRead']);   
     Route::get('/get-user-info', [StudentController::class, 'getUserInfo']);   
+    Route::get('/navInfo', [StudentController::class, 'getNavInfo']);   
     Route::post('/enroll-in-course', [StudentController::class, 'enrollInCourse']);   
     Route::get('/course/get-upload-materials/{id}', [StudentCourseController::class, 'getMaterials']);
     Route::get('/course/dashboard/{id}', [StudentCourseController::class, 'courseDashboardInfo']);   
