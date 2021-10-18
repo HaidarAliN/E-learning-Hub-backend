@@ -33,7 +33,7 @@ class InstructorController extends Controller
         $course->name = $request->name;
         $course->description = $request->description;
         $course->type_id = $request->type_id;
-        $course->major_id = $request->major_id;
+        $course->major_id = "1";
         $course->progress = 0;
         $user->courses()->save($course);
 
@@ -95,6 +95,30 @@ class InstructorController extends Controller
     public function getCourseTypes(){
         $response = CourseType::get();
         return response()->json($response, 200);
+    }
+
+     public function getNotifications(){
+        $user_id = auth()->user()->id;
+        $notifications = User::find($user_id)->notifications()->orderby('is_read')->get();
+        if(count($notifications) > 0){
+            return response()->json($notifications, 200);
+        }else{
+            $response['status'] = "empty";
+            return response()->json([$response], 200);
+        }
+    }
+
+    public function setNotificationAsRead(Request $request){
+        $user_id = auth()->user()->id;
+        $notifications = User::find($user_id)->notifications()->find($request->notification_id);
+        if($notifications){
+            $notifications->is_read = 1;
+            $notifications->save();
+            return response()->json($notifications, 200);
+        }else{
+            $response['status'] = "empty";
+            return response()->json([$response], 200);
+        }
     }
 
 }

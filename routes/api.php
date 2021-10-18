@@ -50,6 +50,8 @@ Route::group([
     Route::get('/get-Finished-courses', [InstructorController::class, 'getFinishedCourses']);   
     Route::get('/dashboard', [InstructorController::class, 'getDashboard']);   
     Route::get('/navInfo', [InstructorController::class, 'getNavInfo']);   
+    Route::get('/notifications', [InstructorController::class, 'getNotifications']);   
+    Route::post('/notifications/mark-read', [InstructorController::class, 'setNotificationAsRead']);   
     Route::get('/get-course-types', [InstructorController::class, 'getCourseTypes']);   
     Route::get('/course/dashboard/{id}', [InstructorCoursesController::class, 'courseDashboardInfo']);   
     Route::get('/course/info/{id}', [InstructorCoursesController::class, 'courseInfo']);
