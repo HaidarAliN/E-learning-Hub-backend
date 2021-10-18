@@ -35,7 +35,7 @@ class studentCourseController extends Controller
             return response()->json($materials, 200);
         }else{
             $response['status'] = "empty";
-            return response()->json([$response], 200);
+            return response()->json($response, 200);
         }
     }
 

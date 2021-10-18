@@ -248,6 +248,7 @@
                     "email": "colinodell@gmail.com",
                     "homepage": "https://www.colinodell.com"
                 }
+                
             ],
             "description": "Given a deep data structure, access data by dot notation.",
             "homepage": "https://github.com/dflydev/dflydev-dot-access-data",

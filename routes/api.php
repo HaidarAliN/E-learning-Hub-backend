@@ -88,7 +88,7 @@ Route::group([
     Route::get('/get-user-info', [StudentController::class, 'getUserInfo']);   
     Route::get('/navInfo', [StudentController::class, 'getNavInfo']);   
     Route::post('/enroll-in-course', [StudentController::class, 'enrollInCourse']);   
-    Route::get('/course/get-upload-materials/{id}', [StudentCourseController::class, 'getMaterials']);
+    Route::get('/course/get-uploaded-materials/{id}', [StudentCourseController::class, 'getMaterials']);
     Route::get('/course/dashboard/{id}', [StudentCourseController::class, 'courseDashboardInfo']);   
     Route::get('/course/get-quizzes/{id}', [StudentCourseController::class, 'courseGetQuizzes']);   
     Route::get('/course/start-quiz/{id}', [StudentCourseController::class, 'courseStartQuiz']);   
