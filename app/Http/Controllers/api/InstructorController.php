@@ -104,7 +104,7 @@ class InstructorController extends Controller
             return response()->json($notifications, 200);
         }else{
             $response['status'] = "empty";
-            return response()->json([$response], 200);
+            return response()->json($response, 200);
         }
     }
 
@@ -117,7 +117,7 @@ class InstructorController extends Controller
             return response()->json($notifications, 200);
         }else{
             $response['status'] = "empty";
-            return response()->json([$response], 200);
+            return response()->json($response, 200);
         }
     }
 

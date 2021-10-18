@@ -55,7 +55,7 @@ class studentCourseController extends Controller
             $response = $user->quizSubmission()->save($new_sub);
             return response()->json($response, 200);
         }else{
-            return response()->json($submission_exist, 200);
+            return response()->json($submission_exist[0], 200);
         }
 
     }
