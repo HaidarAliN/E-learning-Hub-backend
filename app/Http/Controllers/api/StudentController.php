@@ -37,9 +37,10 @@ class studentController extends Controller
     public function getOngoingCourses(){
         $user_id = auth()->user()->id;
         $enroled_courses =  DB::Table('participants')->select('course_id as id')->where([['status',1],['user_id',$user_id]])->pluck('id');//get the list of id's for all enrolled courses
-        $courses = Course::whereIn('id',$enroled_courses)
-                        ->ongoingCourses()
-                        ->get();
+        $courses = Course::whereIn('courses.id',$enroled_courses)
+                        ->join('course_types', 'courses.type_id', '=', 'course_types.id')
+                            ->ongoingCourses()
+                            ->get(['courses.*','course_types.name as course_type']);
         if(count($courses) > 0){
             return response()->json($courses, 200);
         }else{
@@ -51,9 +52,10 @@ class studentController extends Controller
     public function getFinishedCourses(){
         $user_id = auth()->user()->id;
         $enroled_courses =  DB::Table('participants')->select('course_id as id')->where([['status',1],['user_id',$user_id]])->pluck('id');//get the list of id's for all enrolled courses
-        $courses = Course::whereIn('id',$enroled_courses)
-                        ->finishedCourses()
-                        ->get();
+        $courses = Course::whereIn('courses.id',$enroled_courses)
+                            ->join('course_types', 'courses.type_id', '=', 'course_types.id')
+                            ->finishedCourses()
+                            ->get(['courses.*','course_types.name as course_type']);
         if(count($courses) > 0){
             return response()->json($courses, 200);
         }else{
