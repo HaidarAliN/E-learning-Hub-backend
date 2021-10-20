@@ -23,10 +23,11 @@ class studentController extends Controller
         $user_id = auth()->user()->id;
         $name = '%'.$request->course_name.'%';
         $enroled_courses = User::find($user_id)->enrolledCourses()->pluck('id');
-        $courses = Course::where('name', 'like', "$name")
-                    ->whereNotIn('id',$enroled_courses)
+        $courses = Course::where('courses.name', 'like', "$name")
+                    ->whereNotIn('courses.id',$enroled_courses)
+                    ->join('course_types', 'courses.type_id', '=', 'course_types.id')
                     ->ongoingCourses()
-                    ->get();
+                    ->get(['courses.*','course_types.name as course_type']);
         if(count($courses)>0){
             return response()->json($courses, 200);
         }
