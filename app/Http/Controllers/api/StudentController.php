@@ -124,6 +124,11 @@ class studentController extends Controller
 
     }
 
+    public function getCourseName($course_id){
+        $course = Course::find($course_id);
+        $response['name'] = $course->name;
+        return response()->json($response, 200);
+    }
 
     public function sendNotification($tokento, $title, $subject)
     {

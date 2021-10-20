@@ -66,11 +66,6 @@ class AuthController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        // $user = User::create(array_merge(
-        //             $validator->validated(),
-        //             ['password' => bcrypt($request->password)],
-        //         ));
-
         $user = new  User;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
@@ -111,8 +106,12 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function userProfile() {
-        return response()->json(auth()->user());
+    public function updateFirebaseToken(Request $request) {
+        $user = User::find(auth()->user()->id);
+        $user->device_token = $request->token;
+        $user->save();
+        $response['status'] ="updated";
+        return response()->json($response, 200); 
     }
 
     /**

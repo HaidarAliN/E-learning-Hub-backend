@@ -7,6 +7,7 @@ use App\Http\Controllers\api\InstructorController;
 use App\Http\Controllers\api\InstructorCoursesController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentCourseController;
+use App\Http\Controllers\api\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +25,10 @@ Route::group([
     'middleware' => 'api'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+    
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
+    Route::post('/update-firebase-token', [AuthController::class, 'updateFirebaseToken']);    
 });
 
 Route::group([
@@ -36,8 +37,10 @@ Route::group([
     'prefix' => 'admin'
 
 ], function () {
-    Route::post('/register-student', [AuthController::class, 'registerStudent']);   
-    Route::post('/register-intructor', [AuthController::class, 'registerInstructor']);   
+    Route::post('/register', [AuthController::class, 'register']); 
+    Route::post('/reset-password', [AdminController::class, 'resetPassword']);
+    Route::get('/notifications', [InstructorController::class, 'getNotifications']);   
+    Route::post('/notifications/mark-read', [InstructorController::class, 'setNotificationAsRead']);  
 });
 
 Route::group([
@@ -87,6 +90,7 @@ Route::group([
     Route::post('/notifications/mark-read', [StudentController::class, 'setNotificationAsRead']);   
     Route::get('/get-user-info', [StudentController::class, 'getUserInfo']);   
     Route::get('/navInfo', [StudentController::class, 'getNavInfo']);   
+    Route::get('/get-course-name-by-id/{id}', [StudentController::class, 'getCourseName']);   
     Route::post('/enroll-in-course', [StudentController::class, 'enrollInCourse']);   
     Route::get('/course/get-uploaded-materials/{id}', [StudentCourseController::class, 'getMaterials']);
     Route::get('/course/dashboard/{id}', [StudentCourseController::class, 'courseDashboardInfo']);   

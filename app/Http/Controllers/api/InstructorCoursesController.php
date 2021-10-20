@@ -102,7 +102,7 @@ class InstructorCoursesController extends Controller
             return response()->json($course);
         }else{
             $response['status'] = "unauth";
-            return response()->json($response);
+            return response()->json($id);
         }                 
     }
 
