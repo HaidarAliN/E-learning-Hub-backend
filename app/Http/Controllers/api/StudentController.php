@@ -110,7 +110,7 @@ class studentController extends Controller
 
     public function getUserInfo(){
         $user_id = auth()->user()->id;
-        $enrolled = User::find($user_id)->enrolledCourses()->get();
+        $enrolled = User::find($user_id)->enrolledCourses()->where('participants.status',1)->get();
         $response['Courses_count'] = count($enrolled);
         $quizzes = User::find($user_id)->quizSubmission()->submited()->get();
         $response['quiz_submited_count'] = count($quizzes);
