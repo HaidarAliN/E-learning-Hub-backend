@@ -10,7 +10,7 @@ use App\Models\User;
 use Validator;
 use App\Models\Course;
 use App\Models\CourseType;
-
+use DB;
 
 class InstructorController extends Controller
 {
@@ -74,11 +74,16 @@ class InstructorController extends Controller
     public function getDashboard(){
         $user = User::find(auth()->user()->id);
         $count = count($user->courses()->get());
-        $students = count($user->courses()->get());
-        $finished_classes = count($user->courses()->get());
+        $courses_ids = $user->courses()->pluck('id');
+        $student_counts = count(DB::Table('participants')->whereIn('course_id',$courses_ids)->where('status',1)->get());
+        $courses = $user->courses()
+            ->join('course_types', 'courses.type_id', '=', 'course_types.id')
+            ->finishedCourses()
+            ->get(['courses.*','course_types.name as course_type']);
+        $finished_classes = count($courses);
         $response['courses_count'] = $count;
-        $response['student_count'] = $count;
-        $response['Quizzes_done'] = $count;
+        $response['student_count'] = $student_counts;
+        $response['finished_courses'] = $finished_classes;
         return response()->json($response, 201);
 
     }

@@ -51,7 +51,7 @@ class InstructorCoursesController extends Controller
         if($course){
             $lectures = $course->materials()->get();
             $response['lectures_count'] = count($lectures);
-            $course_users = count(Course::find($id)->enrolledUsers()->get());
+            $course_users = count(Course::find($id)->enrolledUsers()->where('participants.status',1)->get());
             $response['students_count'] = $course_users;
             $response['progress'] = $course->progress;
             return response()->json($response);
