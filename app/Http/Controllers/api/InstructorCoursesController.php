@@ -15,6 +15,7 @@ use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Notification;
 use App\Models\StudentSubmission;
+use App\Models\StudentAnswer;
 use DB;
 // use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -359,6 +360,13 @@ class InstructorCoursesController extends Controller
                 $participant = $user->pivot;
                 if($participant){
                     $participant->delete();
+                    Notification::where([['sent_to',$request->student_id],['course_id',$id]])->delete();
+                    $submission = StudentSubmission::where('student_id',$request->student_id)
+                                                        ->join('quizzes', 'student_submissions.quiz_id', '=', 'quizzes.id')
+                                                        ->where('course_id',$id)
+                                                        ->pluck('student_submissions.id');
+                    StudentAnswer::whereIn('submission_id',$submission)->delete();
+                    StudentSubmission::whereIn('id',$submission)->delete();
                     $response['status'] = "deleted";
                     return response()->json($response);
                 }else{
