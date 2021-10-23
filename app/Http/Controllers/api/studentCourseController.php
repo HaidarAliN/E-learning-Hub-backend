@@ -21,7 +21,7 @@ class studentCourseController extends Controller
         $user_id = auth()->user()->id;
         $course = Course::find($id);
         $lectures = $course->materials()->get();
-        $response['lectures_count'] = count($lectures);
+        $response['lectures_count'] = count($lectures);//get the count of uploaded materials in the course
         $quizzes = count(Course::find($id)->quizzes()->get());
         $response['quiz_count'] = $quizzes;
         $response['progress'] = $course->progress;
