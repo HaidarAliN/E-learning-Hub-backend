@@ -62,7 +62,7 @@ class studentController extends Controller
 
     public function getNotifications(){
         $user_id = auth()->user()->id;
-        $notifications = User::find($user_id)->notifications()->orderby('is_read')->get();
+        $notifications = User::find($user_id)->notifications()->orderby('is_read')->orderby('id', 'DESC')->get();
         if(count($notifications) > 0){
             return response()->json($notifications, 200);
         }else{
