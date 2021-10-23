@@ -75,7 +75,11 @@ class studentCourseController extends Controller
             if(!empty($question)){//if new question exist
                 return response()->json($question, 200);    
             }else{
-                $submission->submited = 1;//if no new questions exist uset the submition as done
+                $submission->submited = 1;//if no new questions exist set the submition as done
+                $right_ans_counts = count($submission->quizSubmission()->where('answer',1)->get());//start calculating the score
+                $questions_count = count($submission->quizSubmission()->get());
+                $score = $right_ans_counts.'/'.$questions_count;
+                $submission->score = $score;
                 $submission->save();
                 $response['status'] = "quiz done";
                 return response()->json($response, 200);  

@@ -14,11 +14,6 @@ use DB;
 
 class studentController extends Controller
 {
-    public function test(){
-        $response['status'] = "empty";
-        return response()->json([$response], 200);
-    }
-
     public function getCourseByName(Request $request){
         $user_id = auth()->user()->id;
         $name = '%'.$request->course_name.'%';

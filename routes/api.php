@@ -25,7 +25,6 @@ Route::group([
     'middleware' => 'api'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
-    
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/update-firebase-token', [AuthController::class, 'updateFirebaseToken']);    
@@ -74,7 +73,7 @@ Route::group([
     Route::post('/course/enroll-student/{id}', [InstructorCoursesController::class, 'enrollStudent']);  
     Route::post('/course/remove-student/{id}', [InstructorCoursesController::class, 'removeStudent']);  
     Route::get('/course/get-student-info/{id}', [InstructorCoursesController::class, 'getStudentInfo']);  
-    Route::get('/test', [InstructorCoursesController::class, 'test']);    
+    Route::post('/course/get-students-submissions/{id}', [InstructorCoursesController::class, 'getStudentSubmissions']);  
 });
 
 Route::group([
@@ -82,7 +81,6 @@ Route::group([
     'middleware' => ['auth.student'],
     'prefix' => 'student'
 ], function () {
-    Route::get('/test', [StudentController::class, 'test']);   
     Route::post('/search-for-course', [StudentController::class, 'getCourseByName']);  
     Route::get('/get-ongoing-courses', [StudentController::class, 'getOngoingCourses']);   
     Route::get('/get-finished-courses', [StudentController::class, 'getFinishedCourses']);   

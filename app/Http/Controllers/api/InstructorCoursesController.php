@@ -14,6 +14,7 @@ use App\Models\Participant;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Notification;
+use App\Models\StudentSubmission;
 use DB;
 // use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -395,6 +396,26 @@ class InstructorCoursesController extends Controller
         } 
     }
 
+    public function getStudentSubmissions(Request $request,$id){
+        $user_id = auth()->user()->id;
+        $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
+        if($course){
+            $submissions = StudentSubmission::where('quiz_id',$request->quiz_id)
+                                            ->where('submited',1)
+                                            ->join('users', 'student_submissions.student_id', '=', 'users.id')
+                                            ->get(['student_submissions.*','users.email as email', 'users.first_name as name']);
+            if(count($submissions)>0){
+                return response()->json($submissions, 200);
+            }else{
+                $response['status'] = "empty";
+                return response()->json($response, 200);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response, 403);
+        } 
+    }
+
     public function sendNotification($tokento, $title, $subject)
     {
         // $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
@@ -434,21 +455,5 @@ class InstructorCoursesController extends Controller
         // dd($result);
         curl_close( $ch );
     }
-
-    public function test(){
-        // $user = User::instructor()->get(); use scope example
-
-        //student endroll to course
-        // $course = Course::find(12);
-        // User::find(auth()->user()->id)->enrolledCourses()->save($course);
-        
-        //intructer accept course request access
-        $course = Course::find(12);//12 is the course id
-        $update = User::find(auth()->user()->id)->enrolledCourses()->find($course)->pivot;
-        $update->status = 1;
-        $update->save();
-        return response()->json($update);
-    }
-
 
 }
