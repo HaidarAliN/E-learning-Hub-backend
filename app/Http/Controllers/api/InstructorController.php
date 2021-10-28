@@ -27,27 +27,25 @@ class InstructorController extends Controller
      */
 
     public function create_course(Request $request){
-
         $user = User::find(auth()->user()->id);
-        $course = new Course;
+        $course = new Course;//create new course
         $course->name = $request->name;
         $course->description = $request->description;
         $course->type_id = $request->type_id;
         $course->major_id = "1";
         $course->progress = 0;
-        $user->courses()->save($course);
-
+        $user->courses()->save($course);//save the course using the user foreign key
         return response()->json([
             'message' => 'User successfully registered',
             'user' => $course
-        ], 201);
+        ], 200);
     }
 
     public function getOngoingCourses(){
         $user = User::find(auth()->user()->id);
-        $courses = $user->courses()
-                            ->join('course_types', 'courses.type_id', '=', 'course_types.id')
-                            ->ongoingCourses()
+        $courses = $user->courses()//search for all courses the has this users id as foreign key
+                            ->join('course_types', 'courses.type_id', '=', 'course_types.id')//joining to get the name of the course type
+                            ->ongoingCourses()//progress < 100
                             ->get(['courses.*','course_types.name as course_type']);
         if(count($courses) > 0){
             return response()->json($courses, 200);
@@ -61,7 +59,7 @@ class InstructorController extends Controller
         $user = User::find(auth()->user()->id);
         $courses = $user->courses()
             ->join('course_types', 'courses.type_id', '=', 'course_types.id')
-            ->finishedCourses()
+            ->finishedCourses()//progress = 100
             ->get(['courses.*','course_types.name as course_type']);
         if(count($courses) > 0){
             return response()->json($courses, 200);
@@ -75,9 +73,11 @@ class InstructorController extends Controller
         $user = User::find(auth()->user()->id);
         $count = count($user->courses()->get());
         $courses_ids = $user->courses()->pluck('id');
-        $student_counts = count(DB::Table('participants')->whereIn('course_id',$courses_ids)->where('status',1)->get());
+        $student_counts = count(DB::Table('participants')->whereIn('course_id',$courses_ids)//get the count of all enrolled student in the course
+                                                         ->where('status',1)
+                                                         ->get());
         $courses = $user->courses()
-            ->join('course_types', 'courses.type_id', '=', 'course_types.id')
+            ->join('course_types', 'courses.type_id', '=', 'course_types.id')//get the count of all finished courses
             ->finishedCourses()
             ->get(['courses.*','course_types.name as course_type']);
         $finished_classes = count($courses);
@@ -85,7 +85,6 @@ class InstructorController extends Controller
         $response['student_count'] = $student_counts;
         $response['finished_courses'] = $finished_classes;
         return response()->json($response, 201);
-
     }
 
     public function getNavInfo(){
@@ -94,11 +93,10 @@ class InstructorController extends Controller
         $notification_count = count($user->notifications()->notRead()->get());
         $response['notification_count'] = $notification_count;
         return response()->json($response, 200);
-
     }
 
     public function getCourseTypes(){
-        $response = CourseType::get();
+        $response = CourseType::get();//return all the course types
         return response()->json($response, 200);
     }
 

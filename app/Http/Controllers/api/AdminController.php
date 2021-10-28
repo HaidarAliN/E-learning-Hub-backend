@@ -13,7 +13,7 @@ class AdminController extends Controller
 {
     public function resetPassword(Request $request){
         $user = User::where('email',$request->email)->first();
-        $user->password = bcrypt($request->password);
+        $user->password = bcrypt($request->password);//encrypt the received password
         $user->save();
         $response['status'] ="updated!";
         return response()->json($response, 200);

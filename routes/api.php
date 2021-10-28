@@ -34,12 +34,9 @@ Route::group([
     'middleware' => 'api',
     'middleware' => ['auth.admin'],
     'prefix' => 'admin'
-
 ], function () {
     Route::post('/register', [AuthController::class, 'register']); 
     Route::post('/reset-password', [AdminController::class, 'resetPassword']);
-    Route::get('/notifications', [InstructorController::class, 'getNotifications']);   
-    Route::post('/notifications/mark-read', [InstructorController::class, 'setNotificationAsRead']);  
 });
 
 Route::group([

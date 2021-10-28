@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\api;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Validator;
@@ -17,7 +15,6 @@ use App\Models\Notification;
 use App\Models\StudentSubmission;
 use App\Models\StudentAnswer;
 use DB;
-// use Barryvdh\DomPDF\Facade as PDF;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Storage;
 use File;
@@ -28,11 +25,11 @@ class InstructorCoursesController extends Controller
         $user_id = auth()->user()->id;
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
-            $file = $request->base64file;
+            $file = $request->base64file;//recieve the file
             $file_name =  $request->name;
-            $file_name = "$file_name(".rand(10,1000).")".'.'.'pdf';
-            $path=public_path();
-            $pdf_decoded = base64_decode ($file);
+            $file_name = "$file_name(".rand(10,1000).")".'.'.'pdf';//add random number to the name
+            $path = public_path();//get the path of the public folder of the server
+            $pdf_decoded = base64_decode ($file);//decode the pdf
             $destinationPath = public_path() . "/UploadedMaterials/" . $file_name;             
             file_put_contents($destinationPath, $pdf_decoded);
             $new_material = new Material;
@@ -67,13 +64,13 @@ class InstructorCoursesController extends Controller
         $user_id = auth()->user()->id;
         $course = User::find($user_id)->courses()->find($id);//check if this user is the instructor of the course
         if($course){
-        $lectures = $course->materials()->get();
-        if($lectures){
-            return response()->json($lectures);  
-        }else{
-            $response['status'] = "empty";
-            return response()->json($response, 404);
-        }
+            $lectures = $course->materials()->get();
+            if($lectures){
+                return response()->json($lectures);  
+            }else{
+                $response['status'] = "empty";
+                return response()->json($response, 200);
+            }
         }else{
             $response['status'] = "unauth";
             return response()->json($response);
@@ -87,10 +84,8 @@ class InstructorCoursesController extends Controller
             return response()->json($lecture);  
         }else{
             $response['status'] = "empty";
-            return response()->json($response, 404);
+            return response()->json($response, 200);
         }
-        
-        
     }
 
     public function courseInfo($id){
@@ -104,7 +99,7 @@ class InstructorCoursesController extends Controller
             return response()->json($course);
         }else{
             $response['status'] = "unauth";
-            return response()->json($id);
+            return response()->json($id, 200);
         }                 
     }
 
@@ -175,7 +170,7 @@ class InstructorCoursesController extends Controller
                 return response()->json($questions);
             }else{
                 $response['status'] = "empty";
-                return response()->json($response, 404);
+                return response()->json($response, 200);
             }  
         }else{
             $response['status'] = "unauth";
@@ -200,11 +195,11 @@ class InstructorCoursesController extends Controller
                     return response()->json($question);
                 }else{
                     $response['status'] = "empty";
-                    return response()->json([$response], 404);
+                    return response()->json([$response], 200);
                 }
             }else{
                 $response['status'] = "empty";
-                return response()->json([$response], 404);
+                return response()->json([$response], 200);
             }
         }else{
             $response['status'] = "unauth";
@@ -225,11 +220,11 @@ class InstructorCoursesController extends Controller
                 return response()->json($response); 
                 }else{
                     $response['status'] = "empty";
-                    return response()->json($response, 404);
+                    return response()->json($response, 200);
                 }
             }else{
                 $response['status'] = "empty";
-                return response()->json($response, 404);
+                return response()->json($response, 200);
             }
         }else{
             $response['status'] = "unauth";
@@ -281,12 +276,11 @@ class InstructorCoursesController extends Controller
             if($lecture){
                 $lecture->name = $request->name;
                 $lecture->description = $request->description;
-                // $lecture->path = $request->path;
                 $lecture->save();
                 return response()->json($lecture);  
             }else{
                 $response['status'] = "empty";
-                return response()->json($response, 404);
+                return response()->json($response, 200);
             }
         }else{
             $response['status'] = "unauth";
@@ -306,7 +300,7 @@ class InstructorCoursesController extends Controller
                 return response()->json($response);  
             }else{
                 $response['status'] = "Not found";
-                return response()->json([$response], 404);
+                return response()->json([$response], 200);
             }
         }else{
             $response['status'] = "unauth";
@@ -324,7 +318,6 @@ class InstructorCoursesController extends Controller
                 if($participant){
                     $participant->status = 1;//update status from pending to registerd
                     $participant->save();
-
                     $token = User::find($request->student_id)->device_token;//get firebase token of the instructor
                     $message="You have been Enrolled in the $course->name course";
                     $title="Enrollment Acceptance";
@@ -334,8 +327,6 @@ class InstructorCoursesController extends Controller
                     $notification->body = $message;
                     $notification->course_id = $id;
                     $notification->save();//save the notifcation in the database
-
-
                     return response()->json($participant);
                 }else{
                     $response['status'] = "Not found";
@@ -371,11 +362,11 @@ class InstructorCoursesController extends Controller
                     return response()->json($response);
                 }else{
                     $response['status'] = "Not found";
-                    return response()->json($response, 404);
+                    return response()->json($response, 200);
                 }
             }else{
                 $response['status'] = "Not found";
-                return response()->json($response, 404);
+                return response()->json($response, 200);
             }
         }else{
             $response['status'] = "unauth";
@@ -392,7 +383,6 @@ class InstructorCoursesController extends Controller
             ->orderBy('participants.status')
             ->get(['users.*','participants.*']);
             if(count($participant)>0){
-
                 return response()->json($participant, 200);
             }else{
                 $response['status'] = "empty";
@@ -426,9 +416,7 @@ class InstructorCoursesController extends Controller
 
     public function sendNotification($tokento, $title, $subject)
     {
-        // $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
         $SERVER_API_KEY = 'AAAA9XhgPRI:APA91bGhQasdew-FbmK29yQY_inJicjg7f4jvbscZ6AWfq9W-F-4vplMfm6hkvzF9AWhd4yij6GhH4sjhgdF5F_UGEcWlA5rar7oZaFmzYZDcUCKeNDGlQJ7ENiWfOWOuf-3AE93FcpY';
-  
         $token = $tokento;  
         $from =  $SERVER_API_KEY;
         $msg = array
@@ -436,16 +424,14 @@ class InstructorCoursesController extends Controller
                 'body'  => "$subject",
                 'title' => "$title",
                 'receiver' => 'erw',
-                'icon'  => "https://image.flaticon.com/icons/png/512/270/270014.png",/*Default Icon*/
+                'icon'  => "https://cuddlist.com/wp-content/uploads/2016/12/clipboard-clipboard-icon-91405.png",/*Default Icon*/
                 'sound' => 'mySound'/*Default sound*/
               );
-
         $fields = array
                 (
                     'to'        => $token,
                     'notification'  => $msg
                 );
-
         $headers = array
                 (
                     'Authorization: key=' . $from,
@@ -460,8 +446,6 @@ class InstructorCoursesController extends Controller
         curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
         curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
         $result = curl_exec($ch );
-        // dd($result);
         curl_close( $ch );
     }
-
 }
