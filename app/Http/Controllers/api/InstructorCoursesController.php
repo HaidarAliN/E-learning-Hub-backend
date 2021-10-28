@@ -414,6 +414,50 @@ class InstructorCoursesController extends Controller
         } 
     }
 
+    public function getStudentsGraphscore($id){
+        $submissions = Quiz::where('course_id',$id)->pluck('id');//get the id of all the quizzes of the course
+        
+        if(count($submissions)>0){
+            $temp_score = 0;
+            $temp_studentId;
+            $temp_studentSubmissionId;
+            foreach ($submissions as $quiz_id){
+                
+                $scores = StudentSubmission::where('quiz_id', $quiz_id)->get();
+                if(count($scores)>0){
+                    foreach ($scores as $student_score) {
+                        // if($temp < $student_score['score'])
+                        $score_string = explode('/',$student_score['score']);
+                        $score = (int)$score_string[0];
+                        if($temp_score < $score){
+                            $temp_score = $score;
+                            $temp_studentId = $student_score['student_id'];
+                            $temp_studentSubmissionId =$student_score['id'];
+                            $temp_quizName = $student_score['student_id'];
+                        }
+                    }
+                    $result = User::find($temp_studentId)
+                                    ->join('student_submissions', 'student_submissions.student_id', '=', 'users.id')
+                                    ->where('student_submissions.id',$temp_studentSubmissionId)
+                                    ->get(['users.first_name as name','student_submissions.quiz_id as quizId', 'student_submissions.score as score']);
+                    $quiz_name = Quiz::find($result[0]['quizId']);
+                    $temp_score = 0;
+                    $response['name'] = $result[0]['name'].'/'.$quiz_name['name'];
+                    $final_score_string = explode('/',$result[0]['score']);
+                    $response['Top_Scores']  = $final_score_string[0]*4/(int)$final_score_string[1];
+                    $data[]=$response;
+                }else{
+                    $response['status'] = "empty";
+                    return response()->json($response, 200);
+                }
+            }
+            return response()->json($data, 200);
+        }else{
+            $response['status'] = "empty";
+            return response()->json($response, 200);
+        }
+    }
+
     public function sendNotification($tokento, $title, $subject)
     {
         $SERVER_API_KEY = 'AAAA9XhgPRI:APA91bGhQasdew-FbmK29yQY_inJicjg7f4jvbscZ6AWfq9W-F-4vplMfm6hkvzF9AWhd4yij6GhH4sjhgdF5F_UGEcWlA5rar7oZaFmzYZDcUCKeNDGlQJ7ENiWfOWOuf-3AE93FcpY';
