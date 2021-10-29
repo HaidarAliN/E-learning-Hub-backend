@@ -109,20 +109,19 @@ class studentCourseController extends Controller
     }
 
     public function getStudentsGraphscore($id){
-        $submissions = Quiz::where('course_id',$id)->pluck('id');//get the id of all the quizzes of the course
-        if(count($submissions)>0){
-            $temp_score = 0;
-            $temp_studentId;
+        $quiz_ids = Quiz::where('course_id',$id)->pluck('id');//get the id of all the quizzes of the course
+        if(count($quiz_ids)>0){
+            $temp_score = 0;//initialize the temp variables
+            $temp_studentId=0;
             $temp_studentSubmissionId;
-            foreach ($submissions as $quiz_id){
+            foreach ($quiz_ids as $quiz_id){
                 
-                $scores = StudentSubmission::where('quiz_id', $quiz_id)->get();
+                $scores = StudentSubmission::where([['quiz_id', $quiz_id],['submited',1]])->get();//get the submissions of students for the current quiz
                 if(count($scores)>0){
                     foreach ($scores as $student_score) {
-                        // if($temp < $student_score['score'])
-                        $score_string = explode('/',$student_score['score']);
+                        $score_string = explode('/',$student_score['score']);//split the score
                         $score = (int)$score_string[0];
-                        if($temp_score < $score){
+                        if($temp_score < $score){//check for the highest score
                             $temp_score = $score;
                             $temp_studentId = $student_score['student_id'];
                             $temp_studentSubmissionId =$student_score['id'];
@@ -137,15 +136,19 @@ class studentCourseController extends Controller
                     $temp_score = 0;
                     $response['name'] = $result[0]['name'].'/'.$quiz_name['name'];
                     $final_score_string = explode('/',$result[0]['score']);
-                    $response['Top_Scores']  = $final_score_string[0]*4/(int)$final_score_string[1];
+                    $response['Top_Scores']  = $final_score_string[0]*4/(int)$final_score_string[1];//calculate the GPA of the student who has the highest score
                     $data[]=$response;
                 }else{
-                    $response['status'] = "empty";
-                    return response()->json($response, 200);
+                    continue;
                 }
             }
-            return response()->json($data, 200);
-        }else{
+            if($temp_studentId != 0){
+                return response()->json($data, 200);
+            }else{
+                $response['status'] = "empty";
+                return response()->json($response, 200);
+            }
+            }else{
             $response['status'] = "empty";
             return response()->json($response, 200);
         }
