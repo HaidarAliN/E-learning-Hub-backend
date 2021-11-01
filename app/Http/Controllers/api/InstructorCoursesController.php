@@ -418,7 +418,7 @@ class InstructorCoursesController extends Controller
         $quiz_ids = Quiz::where('course_id',$id)->pluck('id');//get the id of all the quizzes of the course
         
         if(count($quiz_ids)>0){
-            $temp_score = 0;//initialize the temp variables
+            $temp_score = -1;//initialize the temp variables
             $temp_studentId=0;
             $temp_studentSubmissionId;
             foreach ($quiz_ids as $quiz_id){
@@ -440,7 +440,7 @@ class InstructorCoursesController extends Controller
                                     ->where('student_submissions.id',$temp_studentSubmissionId)
                                     ->get(['users.first_name as name','student_submissions.quiz_id as quizId', 'student_submissions.score as score']);
                     $quiz_name = Quiz::find($result[0]['quizId']);
-                    $temp_score = 0;
+                    $temp_score = -1;
                     $response['name'] = $result[0]['name'].'/'.$quiz_name['name'];
                     $final_score_string = explode('/',$result[0]['score']);
                     $response['Top_Scores']  = $final_score_string[0]*4/(int)$final_score_string[1];//calculate the GPA of the student who has the highest score
