@@ -94,7 +94,8 @@ Route::group([
     Route::get('/course/start-quiz/{id}', [StudentCourseController::class, 'courseStartQuiz']);   
     Route::get('/course/get-quiz-questions/{quizId}', [StudentCourseController::class, 'courseGetQuizzeQuestions']);   
     Route::post('/course/answer-quiz-questions/{quizId}', [StudentCourseController::class, 'courseAnswerQuizzeQuestion']); 
-    Route::get('/course/get-students-scoregraph/{id}', [StudentCourseController::class, 'getStudentsGraphscore']);  
+    Route::get('/course/get-students-scoregraph/{id}', [StudentCourseController::class, 'getStudentsGraphscore']); 
+    Route::post('/course/get-student-submission/{id}', [StudentCourseController::class, 'getStudentSubmission']); 
 });
 
 

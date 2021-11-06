@@ -153,4 +153,32 @@ class studentCourseController extends Controller
             return response()->json($response, 200);
         }
     }
+
+    public function getStudentSubmission(Request $request,$id){
+        $user_id = auth()->user()->id;
+        $student_enrolled = User::find($user_id)->enrolledCourses()->where([['participants.user_id',$user_id],['participants.status',1]])->first();
+        if($student_enrolled){
+            $submission = User::find($user_id)->quizSubmission()->where([['quiz_id',$request->quiz_id],['submited',1]])->first();
+            if($submission){
+                $response['score']= $submission->score;
+                $score_string = explode('/',$submission->score);
+                $true_answers = (int)$score_string[0];
+                $total_answers = (int)$score_string[1];
+                if($true_answers == $total_answers){
+                    $response['quiz_status']= "Full Mark";
+                }else if($true_answers >= ($total_answers/2)){
+                    $response['quiz_status']= "Pass";
+                }else{
+                    $response['quiz_status']= "Fail";
+                }
+                return response()->json($response, 200);
+            }else{
+                $response['status'] = "empty";
+                return response()->json($response, 200);
+            }
+        }else{
+            $response['status'] = "unauth";
+            return response()->json($response, 403);
+        } 
+    }
 }
