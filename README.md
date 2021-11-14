@@ -8,7 +8,7 @@
 - Reset users passwords 
 - ### Instructore Side:
 - Create Courses
-- Uplaod Mateial
+- Upload Material
 - Manage Quizzes
 - Manage Students
 - View Students Submissions
@@ -23,14 +23,14 @@
 
 - [Laravel] - A web application framework with expressive, elegant syntax.
 - [JWT] - For authentication using JSON Web Tokens
-- [Firebase] - Used for push notifcations
+- [Firebase] - Used for push notifications
 - [React WebApp] - The frontend of the website.
 
 
 
 ## Installation
 
-Installcomposer on your machine using the following link: <br />
+Install composer on your machine using the following link: <br />
 <a href="https://getcomposer.org/download/">Composer download</a>
 
 Clone the repository:
@@ -78,13 +78,13 @@ php artisan serve
 You can now access the server at http://localhost:8000
 
 ## Database seeding
-Populate the database with seed data with relationships which includes users, courses, uploaded materials, quizzes, questions and submissions. This can help you to quickly start testing the api or couple a frontend and start using it with ready content.
+Populate the database with seed data with relationships which includes users, courses, uploaded materials, quizzes, questions, and submissions. This can help you to quickly start testing the API or couple a frontend and start using it with ready content.
 
 Run the database seeder and you're done
 ```sh
 php artisan db:seed
 ```
-Note : It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running the following command
+Note: It's recommended to have a clean database before seeding. You can refresh your migrations at any point to clean the database by running the following command
 
 ```sh
 php artisan migrate:refresh
